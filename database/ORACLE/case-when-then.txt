@@ -1,0 +1,7 @@
+update accountinfo a
+set a.balance = case when a.balance>6000
+then a.balance + 1
+else a.balance + 2
+end;
+.
+run;

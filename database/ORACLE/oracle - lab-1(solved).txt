@@ -1,0 +1,74 @@
+create table student
+(
+id varchar(20) not null,
+name varchar(20),
+dept varchar(20),
+year varchar(20),
+constraint pk1 primary key(id)
+);
+
+
+create table studentinfo
+(
+id varchar(20) not null,
+dist varchar(20),
+thana varchar(20),
+mobile varchar(20),
+constraint pk2 primary key(id),
+constraint fk1 foreign key(id)
+references student(id)
+);
+
+
+
+create table accountinfo
+(
+id varchar(20) not null,
+balance varchar(20),
+savings varchar(20),
+loan varchar(20),
+constraint pk3 primary key(id),
+constraint fk2 foreign key(id)
+references student(id)
+);
+
+
+insert into student values('CE09002','Rasel','CSE','3rd');
+insert into student values('CE09004','Abir','CSE','3rd');
+insert into student values('IT08005','Shohel','ICT','4th');
+insert into student values('TE08007','Shakil','Textile','4th');
+insert into student values('ES09008','Faysal','ESRM','3rd');
+insert into student values('FT10006','Faruk','FTNS','2nd');
+insert into student values('IT11009','Kabir','ICT','1st');
+
+
+insert into studentinfo values('CE09002','Dhaka','Uttara','01722410844');
+insert into studentinfo values('CE09004','Khulna','Khalishpur','01911098567');
+insert into studentinfo values('IT08005','Jessore','Magura','01552346789');
+insert into studentinfo values('TE08007','Chittagonj','Potenga','01722426578');
+insert into studentinfo values('ES09008','Barisal','Jhalakati','01671235678');
+insert into studentinfo values('FT10006','Gazipur','Kapasia','01712349876');
+insert into studentinfo values('IT11009','Sylhet','Hobiganj','01712456123');
+
+
+
+insert into accountinfo values('CE09002','2500','4000','1500');
+insert into accountinfo values('CE09004','4000','9000','5000');
+insert into accountinfo values('IT08005','6000','15000','9000');
+insert into accountinfo values('TE08007','5000','10000','5000');
+insert into accountinfo values('ES09008','7500','12500','5000');
+insert into accountinfo values('FT10006','8000','9000','1000');
+insert into accountinfo values('IT11009','10000','20000','10000');
+
+
+
+1) select name,id,dept from student where year='2nd' or year = '3rd' or year = '4th';
+2) select count(distinct dept) from student;
+3) select distinct student.id,student.name,studentinfo.dist,studentinfo.mobile from  student,studentinfo where student.id=studentinfo.id;
+4) select student.name,accountinfo.balance from student,accountinfo where student.id=accountinfo.id AND accountinfo.balance>5000;
+5) select name from student where name like '%Sh%' or name like '%Fa%';
+6) select round(balance + balance*.1) balance from accountinfo;
+7) update student set name = 'Irfan' where name = 'Rasel';
+8) select student.name,accountinfo.balance from student,accountinfo where student.id=accountinfo.id order by accountinfo.balance desc;
+9) select name from student where year != '3rd' And year!= '4th';
+10) select student.name,student.id,accountinfo.balance from student, accountinfo where student.id=accountinfo.id AND accountinfo.balance between 3000 and 10000;

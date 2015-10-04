@@ -1,0 +1,75 @@
+<div class="body_right">
+<div class="body_right_inner">
+			
+<div class="hot_notice">
+				
+<div class="hot_notice_header">Recent Notice</div>
+								
+<div style="width:220px; border-bottom:#CCCCCC 1px dashed; padding:7px 0px;">
+				
+<div class="hot_notice_titles">Degree Pass Course Admission for the Session of 2012-2013&nbsp;<span class="hot_notice_date">(24 March 2013)</span></div>
+					
+<div class="hot_notice_body">Notice on Degree Pass Course Admission for the Session of 2012-2013 <a href="http://blcollege.edu.bd/notice.php?ca=4&amp;nid=DegreePassAdmissionNotice.pdf">Details</a></div></div>	
+								
+<div style="width:220px; border-bottom:#CCCCCC 1px dashed; padding:7px 0px;">
+				
+<div class="hot_notice_titles">1st year admission 2012-2013 : 3rd merit&nbsp;<span class="hot_notice_date">(05 February 2013)</span></div>
+					
+<div class="hot_notice_body">1st year admission 2012-2013 : 3rd merit <a href="http://blcollege.edu.bd/notice.php?ca=4&amp;nid=3rd%20merit.pdf">Details</a></div></div>	
+								
+				
+<div class="hot_notice_body"><a href="http://blcollege.edu.bd/notice.php?ca=4">More</a></div>
+
+
+
+.....................................................................CSS CODE........................................
+.body_right{height:auto;width:256px;float:right;padding: 0 10px;}
+.body_right2{
+	height:auto;
+	width:710px;
+	float:right;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.body_right_inner{height:auto;width:240px; background-color:#E7EBEC; padding:8px; font-family:"Siyam Rupali";}
+.hot_notice{height:auto;width:220px; padding:8px; background-color:#003300; background:url(images/ht_news_bg.gif) repeat-x; font-family:'Siyam Rupali';}
+.hot_notice_header{	width:210px;padding-top:5px;color:#058CC4;font-size:18px;text-align:right;font-weight: bold; font-family:'Siyam Rupali';}
+.hot_notice_titles{width:210px;padding:0px 0px 0px 10px;color:#FFFFFF;	font-size:12px;	text-align:left;	font-weight: bold; background:url(../rajendraCollege/images/arrow.gif) no-repeat 7px 5px; font-family:"Siyam Rupali";}
+.hot_notice_date{	color:#f5f5f5;	font-size:10px;	text-align:left;	font-weight:normal; font-family:"Siyam Rupali";}
+.hot_notice_body{	width:200px;padding:5px 0px 0px 10px;	color:#FFFFFF;	font-size:12px;	text-align:left; font-family:"Siyam Rupali";}
+.hot_notice_body a{color:#FFCC00; text-decoration:none; font-weight:bold;}
+.hot_notice_body a:hover{color:#058CC4; text-decoration:none; font-weight:bold;}
+
+
+.hot_notice_department{height:150px;width:204px; padding:10px; background-color:#003300; background:url(images/ht_news_bg.gif) repeat-x; font-family:"Siyam Rupali";}
+.hot_notice_department_header{	width:204px;padding-top:5px;color:#FF0000;font-size:18px;text-align:right;font-weight: bold; font-family:"Siyam Rupali";}
+.hot_notice_department_titles{width:184px;padding:0px 0px 0px 20px;color:#FFFFFF;	font-size:12px;	text-align:left;	font-weight: bold; background:url(../rajendraCollege/images/arrow.gif) no-repeat 7px 5px; font-family:"Siyam Rupali";}
+.hot_notice_department_date{	color:#f5f5f5;	font-size:10px;	text-align:left;	font-weight:normal; font-family:"Siyam Rupali";}
+.hot_notice_department_body{	width:184px;padding:5px 0px 0px 20px;	color:#FFFFFF;	font-size:10px;	text-align:left; font-family:"Siyam Rupali";}
+
+
+.events{height:100px;width:240px;background-color:#003300; background:url(images/events_bg.jpg) repeat-x;}
+.events2{height:100px;width:240px;background-color:#003300; background:url(images/events.jpg) repeat-x;}
+
+
+
+.body_right_blank{height:20px;width:240px; background-color:#FFFFFF; padding:8px;}
+
+
+.notice{padding:15px; width:210px;}
+.notice_title{font-size:16px; font-weight:bold; font-family:Verdana, Arial, Helvetica, sans-serif; color:#FB9D2B;}
+.notice_body{width:210px; height:50px;border-bottom:#999999 1px dashed;}
+.notice_num{width:22px; padding:22px 4px; height:6px; float:left; background:url(images/news_num.jpg) no-repeat; font-size:10px; font-weight:bold;}
+.notice_text{width:180px; float:right;padding-top:10px;}
+.notice_text a{text-decoration:none; color:#058CC4;}
+.notice_text a:hover{text-decoration:underline; color:#009933;}
+
+
+
+
+.notice_text strong{color:#28AED4; font-size:13px;}
+.notice_view{padding-top:15px; color:#28AED4;}
+.notice_view a{padding-top:15px; padding-left:25px; background:url(images/notice_arrow.jpg) 15px 20px no-repeat; color:#28AED4;}
+.notice_view a:hover{padding-top:15px; text-decoration:none; color:#28AED4;}
+
+

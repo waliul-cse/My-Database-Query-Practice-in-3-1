@@ -1,0 +1,5 @@
+INSERT INTO Employee VALUES('01','Waliul','islam','10-JAN-2010','20-JAN-2010',20000,'Engineer','RAjshahi');
+INSERT INTO Employee VALUES('02','Munna','Khan','12-JAN-2010','22-JAN-2010',20000,'Engineer','Dhaka');
+INSERT INTO Employee VALUES('03','Rasel','Islam','12-JAN-2010','23-JAN-2010',20000,'Engineer','Gazipur');
+INSERT INTO Employee VALUES('04','Noman','Islam','12-JAN-2010','23-JAN-2010',30000,'Engineer','Sirajgong');
+INSERT INTO Employee VALUES('05','Rubel','Khan','30-JAN-2010','2-JAN-2011',30000,'Engineer','Kurigram');

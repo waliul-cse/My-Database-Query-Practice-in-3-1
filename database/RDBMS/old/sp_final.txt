@@ -1,0 +1,75 @@
+create table student(
+std_id varchar2(10),
+dept varchar2(10)
+);
+
+create table student_info(
+std_id varchar2(10),
+name varchar2(15)
+);
+
+create table student_detail(
+std_id varchar2(10),
+district varchar2(15),
+mobile number(12)
+);
+
+insert into student values('CE-10004','cse');
+insert into student_info values('CE-10004','ankon');
+insert into student_detail values('CE-10004','mymen',01673303087);
+
+
+/////////////////////////procedure/////////////////////////////////
+create or replace procedure sp_student_info
+(
+p_id in varchar2,
+nm in varchar2,
+dis in varchar2,
+mycursor out sys_refcursor,
+cursor2 out sys_refcursor,
+cursor3 out sys_refcursor
+)
+is
+begin open mycursor for
+select 
+a.std_id,
+a.dept
+from student a
+where a.std_id=p_id;
+open cursor2 for
+select
+s.std_id, 
+s.name
+from student_info s
+where s.name=nm;
+open cursor3 for
+select
+d.std_id, 
+d.district,
+d.mobile
+from student_detail d
+where d.district=dis;
+end sp_student_info;
+
+
+///////////////////run cursor/////////////
+set serveroutput on
+declare
+testcursor sys_refcursor;
+test1 sys_refcursor;
+test2 sys_refcursor;
+row student%rowtype;
+row1 student_info%rowtype;
+row2 student_detail%rowtype;
+begin
+sp_student_info('CE-10004','ankon','mymen',testcursor,test1,test2);
+loop
+fetch testcursor into row;
+fetch test1 into row1;
+fetch test2 into row2;
+exit when testcursor%notfound;
+exit when test1%notfound;
+exit when test2%notfound;
+dbms_output.put_line(row.std_id||'--'||row.dept||'--'||row1.name||'--'||row2.district||'--'||row2.mobile);
+end loop;
+end;

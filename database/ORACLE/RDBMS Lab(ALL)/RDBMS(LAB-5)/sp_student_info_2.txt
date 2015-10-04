@@ -1,0 +1,58 @@
+create or replace procedure sp_student_info_2
+(
+p_id in varchar,
+my_cursor out sys_refcursor
+)as
+begin
+open my_cursor for
+select   a.id
+	,a.name
+	,a.dept
+	,a.year
+	,b.district
+	,b.mobile_no
+	from student a
+	left join student_info b on a.id=b.student_id
+where (a.id=p_id);
+end sp_student_info_2;
+------------------------------------------------------
+select   a.id
+	,a.name
+	,a.dept
+	,a.year
+	,b.mobile_no
+	,b.district
+	from student a
+	left join student_info b
+	on a.id=b.student_id
+where (a.id='ce08010');
+--------------------------------------------------------
+How to execute with parameter
+---------------------------------------------------------
+set serveroutput on format wrap
+DECLARE 
+  c_dbuser SYS_REFCURSOR;
+  temp_dbuser student%ROWTYPE;
+  temp_dbuser1 student_info%ROWTYPE;
+BEGIN
+ 
+  --records are assign to cursor 'c_dbuser'
+  sp_student_info('ce08010',c_dbuser);
+ 
+  LOOP
+ 
+        --fetch cursor 'c_dbuser' into dbuser table type 'temp_dbuser'
+	FETCH c_dbuser INTO temp_dbuser,temp_dbuser1;
+ 
+        --exit if no more records
+        EXIT WHEN c_dbuser%NOTFOUND;
+ 
+        --print the matched username
+        dbms_output.put_line(temp_dbuser.id||'-'||temp_dbuser.name||'-'||temp_dbuser.dept||'-'||temp_dbuser.year||'-'||temp_dbuser1.district||'-'||temp_dbuser1.mobile_no);
+ 
+  END LOOP;
+ 
+  CLOSE c_dbuser;
+ 
+END;
+

@@ -1,0 +1,154 @@
+Create Table student_sp
+(id int,
+Name varchar(10),
+Dept  varchar(12));
+
+_________________________---Create Procedure__________________________
+Create or Replace procedure insert_sp2
+id IN int) is
+begin
+insert into student_sp values(id);
+end;
+/
+________________how to pass parameter_________________
+begin
+insert_sp(10,'waliul','CSE');
+
+or 
+exec insert_sp(10,'waliul','CSE');
+
+
+_________________________________________LOOP_______________________________________________
+DECLARE x number := 0; 
+BEGIN 
+LOOP  
+x := x +1; 
+IF x > 50 THEN exit; 
+END IF; 
+END LOOP;  
+END; 
+/
+
+
+Declare 
+i number:=0;
+j number:=0;
+begin
+loop
+insert into stu_avv(i,j);
+i:=i+1;
+j:=j+100;
+exit when i>10 and j>1000;
+end loop;
+end;
+
+
+DECLARE a number(2) := 10;
+ BEGIN WHILE a < 20 
+LOOP 
+dbms_output.put_line('value of a: ' || a); 
+a := a + 1;
+ END LOOP; 
+END;
+ /
+/
+
+Syntax of for loop;
+FOR counter IN initial_value .. final_value 
+LOOP
+ sequence_of_statements;
+
+
+DECLARE 
+a number(2); 
+BEGIN
+FOR a in 10 .. 20 LOOP 
+dbms_output.put_line('value of a: ' || a); 
+END LOOP; 
+END;
+/
+PL/SQL procedure successfully completed.
+____________________________________________-Reverse for loop_________________________
+DECLARE 
+a number(2) ; 
+BEGIN FOR a IN REVERSE 10 .. 20 LOOP 
+dbms_output.put_line('value of a: ' || a); 
+END LOOP; 
+END;
+/
+PL/SQL procedure successfully completed
+
+_________________________________________-prime number using loop___________________________________-
+DECLARE 
+i number(3); 
+j number(3);
+BEGIN i := 2; 
+LOOP 
+j:= 2; 
+LOOP exit WHEN ((mod(i, j) = 0) or (j = i)); 
+j := j +1; 
+END LOOP; 
+IF (j = i ) THEN dbms_output.put_line(i || ' is prime'); 
+END IF; i := i + 1; 
+exit WHEN i = 50; 
+END LOOP;
+ END; 
+/
+
+PL/SQL procedure successfully completed
+
+
+
+Syntax of stored procedure:
+
+CREATE [OR REPLACE] PROCEDURE procedure_name 
+[(parameter_name [IN | OUT | IN OUT] type [, ...])]
+ {IS | AS}
+ BEGIN < procedure_body > 
+END procedure_name
+
+
+This program finds the minimum of two values, here procedure takes two numbers using IN mode and returns 
+their minimum using OUT paramters. 
+
+DECLARE 
+a number; 
+b number; 
+c number;
+ PROCEDURE findMin(x IN number, y IN number, z OUT number) IS 
+BEGIN
+ IF x < y THEN z:= x; 
+ELSE z:= y;
+ END IF;
+ END; 
+BEGIN a:= 23; b:= 45;
+ findMin(a, b, c); 
+dbms_output.put_line(' Minimum of (23, 45) : ' || c);
+ END;
+/
+
+Syntax of function:
+CREATE [OR REPLACE] FUNCTION function_name 
+[(parameter_name [IN | OUT | IN OUT] type [, ...])] 
+RETURN return_datatype 
+{IS | AS} 
+BEGIN < function_body > 
+END [function_name];
+
+
+
+DECLARE num number; 
+factorial number; 
+FUNCTION fact(x number) 
+RETURN number IS 
+f number;
+ BEGIN IF x=0 THEN f := 1; 
+ELSE f := x * fact(x-1); 
+END IF; 
+RETURN f; 
+END; 
+BEGIN num:= 6; 
+factorial := fact(num);
+ dbms_output.put_line(' Factorial '|| num || ' is ' || factorial);
+ END;
+/

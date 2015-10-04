@@ -1,0 +1,139 @@
+
+____________________________________________________________Trigger______________________________________________________
+Syntax of Trigger:
+  CREATE [OR REPLACE] TRIGGER trigger_name
+  {BEFORE | AFTER | INSTEAD OF} trigger_event
+   ON table_name
+  [FOR EACH ROW [WHEN trigger_condition]]
+   BEGIN
+   trigger_body
+  END trigger_name;
+
+  -- ___________________________________________create demo table____________________________________________________________________
+         create table Employee(
+         ID varchar(4) NOT NULL,
+         First_Name varchar(10),
+         Last_Name varchar(10),
+         Salary Number(8,2),
+         City varchar(10),
+         Description varchar(15));
+
+
+SQL> alter table employee modify id varchar(15);
+
+Table altered.
+
+SQL> desc employee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- --------------------
+ ID                                        NOT NULL VARCHAR2(15)
+ FIRST_NAME                                         VARCHAR2(10)
+ LAST_NAME                                          VARCHAR2(10)
+ SALARY                                             NUMBER(8,2)
+ CITY                                               VARCHAR2(10)
+ DESCRIPTION                                        VARCHAR2(15)
+
+
+_________________________________________________insert command____________________________________________________
+insert into employee values('em101','Abid','Hasan',30000,'Raj','SA');
+insert into employee values('em102','Hamid','Hossain',20000,'Jessore','Maneger');
+insert into employee values('em103','Milon','Hok',40000,'DHA','SE');
+insert into employee values('em104','Aslam','Talukdar',50000,'India','Banker');
+
+
+
+
+
+SQL> select*from employee where rownum<=3;
+
+ID              FIRST_NAME LAST_NAME      SALARY CITY       DESCRIPTION
+--------------- ---------- ---------- ---------- ---------- --------------
+em102           Hamid      Hossain         20000 Jessore    Maneger
+em103           Milon      Hok             40000 DHA        SE
+em104           Aslam      Talukdar        50000 India      Banker
+
+
+
+_______________________________________________________audit Table______________________________________________________
+
+create table myaudit(
+ id VARCHAR2(10) NOT NULL,
+ old_value VARCHAR2(40),
+ new_value VARCHAR2(40));
+
+
+
+__________________________________________________-Trigger______________________________________
+
+CREATE TABLE myTable 
+(Name VARCHAR(50),
+ PhoneNo VARCHAR(15));
+
+
+
+
+CREATE TABLE myTableAudit
+(id INT PRIMARY KEY NOT NULL,
+Operation VARCHAR(10),
+RecordedOn DATE DEFAULT SysDate,
+ OldName VARCHAR(50),
+ NewName VARCHAR(50),
+OldPhone VARCHAR(15),
+NewPhone VARCHAR(15));
+
+
+
+
+CREATE or replace TRIGGER myTableAuditTrigger
+ AFTER INSERT ON myTable
+ FOR EACH ROW
+ BEGIN
+ INSERT INTO myTableAudit (id, Operation, NewName, NewPhone)
+ VALUES (1, 'Insert ', :NEW.Name, :NEW.PhoneNo);
+ END;
+ /
+
+Trigger created
+
+
+CREATE OR REPLACE TRIGGER myTableAuditTrigger
+ AFTER INSERT OR DELETE OR UPDATE ON myTable
+ FOR EACH ROW
+ BEGIN
+ IF INSERTING THEN
+ INSERT INTO myTableAudit (Operation, NewName, NewPhone)VALUES ('Insert ', :NEW.Name, :NEW.PhoneNo);
+ ELSIF DELETING THEN
+ INSERT INTO myTableAudit (Operation, OldName, OldPhone)VALUES ('Delete ', :OLD.Name, :OLD.PhoneNo);
+ ELSIF UPDATING THEN
+ INSERT INTO myTableAudit (Operation, OldName, OldPhone, NewName, NewPhone)VALUES ('Update ', :OLD.Name, :OLD.PhoneNo, :NEW.Name, :NEW.11 END IF;
+ END;
+
+
+
+
+
+
+CREATE TABLE account_transaction
+(transaction_id NUMBER(7),
+ account_id NUMBER(8),
+Transaction_type VARCHAR2(15),
+ transaction_amount NUMBER(6),
+comments VARCHAR2(30));
+
+
+ insert into account_transaction values(123,0777,'Update',600,'b_update');
+  
+ insert into account_transaction values(124,0447,'delete',400,'b_insert');
+
+
+
+CREATE OR REPLACE TRIGGER validate_update
+ BEFORE UPDATE ON account_transaction
+ FOR EACH ROW
+ BEGIN
+ IF UPDATING('ACCOUNT_ID') THEN
+ DBMS_OUTPUT.put_line ('ERROR');
+ END IF;
+ END;
+/
+ 

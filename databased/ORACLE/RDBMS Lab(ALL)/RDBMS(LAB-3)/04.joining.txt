@@ -1,0 +1,10 @@
+Queries:
+
+1)select a.id,a.name,b.result,b.position from student a
+left join student_09 b on a.id=b.roll;
+
+2)select a.id,a.name,b.result,b.position from student a
+right join student_09 b on a.id=b.roll;
+
+3)select a.id,a.name,b.result,b.position from student a
+inner join student_09 b on a.id=b.roll;

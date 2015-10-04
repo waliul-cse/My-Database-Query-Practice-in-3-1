@@ -1,0 +1,89 @@
+/////////////////////////////////////////////////////////////0771//////////////////////////////////////
+
+select * from patient;
+select * from bed;
+select * from room;
+select * from room_bed;
+select * from patient_bed;
+drop table patient_bed;
+drop table room_bed;
+drop table room;
+drop table bed;
+drop table patient;
+
+create table patient
+(
+patient_code char(10) not null,
+patient_name char(10),
+age number,
+contact_no number,
+admission_date number,
+release_date number,
+constraint pk_11 primary key(patient_code)
+);
+insert into patient values('p100','jahid','20','013453628','4','10');
+insert into patient values('p101','nahid','21','013453622','5','11');
+insert into patient values('p102','rahid','22','013453623','6','12');
+insert into patient values('p103','fahid','23','013453624','7','13');
+
+create table bed
+(
+bed_no char(10) not null,
+desciption char(10),
+constraint pk_21 primary key(bed_no)
+);
+insert into bed values('bd0','hiv');
+insert into bed values('bd1','canser');
+insert into bed values('bd2','hadr');
+insert into bed values('bd3','nothing');
+
+create table room
+(
+room_no char(10) not null,
+room_cost number,
+floor_id char(10),
+constraint pk_31 primary key(room_no)
+);
+
+
+insert into room values('b100','1000','f1');
+insert into room values('b101','2000','f2');
+insert into room values('b102','3000','f3');
+insert into room values('b103','4000','f4');
+
+create table room_bed
+(
+room_no char(10),
+bed_no char(10)
+);
+
+insert into room_bed values('b100','bd0');
+insert into room_bed values('b101','bd1');
+insert into room_bed values('b102','bd2');
+insert into room_bed values('b103','bd3');
+
+
+create table patient_bed
+(
+patient_code char(10),
+bed_no char(10)
+);
+
+insert into patient_bed values('p100','bd0');
+insert into patient_bed values('p101','bd1');
+insert into patient_bed values('p102','bd2');
+insert into patient_bed values('p103','bd3');
+
+1
+select patient_name from patient a inner join patient_bed b on a.patient_code=b.patient_code inner join room_bed c on b.bed_no=c.bed_no where room_no in('b100');
+
+2
+select count(distinct(floor_id)) from patient a inner join
+ patient_bed b on a.patient_code=b.patient_code inner join
+ room_bed c on b.bed_no=c.bed_no inner join room d on
+ c.room_no=d.room_no where age>20;
+
+3
+update room set room.room_cost=room_cost+'80' where room.room_cost in (select room_cost from room group by room_cost having count(room_cost)>2);
+or
+update room set room_cost=room_cost+'80' where room_no in (select room_no from room group by room_no having count(room_no)>2);

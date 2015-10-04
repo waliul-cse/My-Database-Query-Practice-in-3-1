@@ -1,0 +1,95 @@
+create table book1
+(
+book_id char(10),
+book_name char(10),
+publisher char(10),
+price char(10),
+constraint b1 primary key(book_id)
+);
+
+insert into book1 values('b100','o1','pores','1000');
+insert into book1 values('b101','o2','nores','2000');
+insert into book1 values('b102','o3','sapla','3000');
+insert into book1 values('b103','o4','jilam','4000');
+
+create table dept1
+(
+dept_id char(10),
+dept_name char(10),
+constraint b2 primary key(dept_id)
+);
+
+insert into Dept1 values('ce','BGE');
+
+insert into Dept1 values('te','TE');
+
+insert into Dept1 values('be','CSE');
+
+insert into Dept1 values('de','CSE');
+
+
+create table student1
+(
+stu_id char(10),
+stu_name char(10),
+dept_id char(10),
+semes_id char(10),
+constraint b3 primary key(stu_id),
+constraint bk1 foreign key(dept_id)
+references dept1(dept_id)
+);
+insert into student1 values('ce11002','nayem','ce');
+insert into student1 values('te11002','kayem','te');
+insert into student1 values('it11002','payem','it');
+insert into student1 values('em11002','jayem','em');
+
+
+create table book_dept1
+(
+book_id char(10),
+dept_id char(10),
+constraint bk2 foreign key(book_id)
+references book1(book_id),
+constraint bk3 foreign key(dept_id)
+references dept1(dept_id)
+);
+insert into book_dept1 values('b100','ce');
+insert into book_dept1 values('b101','te');
+insert into book_dept1 values('b102','it');
+insert into book_dept1 values('b103','em');
+create table book_tran
+(
+book_id char(10),
+stu_id char(10),
+issudate char(10),
+duedate char(10),
+constraint bk4 foreign key(book_id)
+references book1(book_id),
+constraint bk5 foreign key(stu_id)
+references student1(stu_id)
+);
+insert into book_tran values('b100','ce11002','5','10');
+insert into book_tran values('b101','te11002','20','30');
+insert into book_tran values('b102','it11002','15','24');
+insert into book_tran values('b103','em11002','14','29');
+
+select * from book;
+select * from dept;
+select * from stu;
+select * from book_dept;
+select * from book_tran;
+
+book_id,book_name,publisher,price,dept_id char,dept_name,
+stu_id cha,stu_name,dept_id,semes_id,
+book_id,dept_id,book_id,stu_id,issudate,duedate,
+1
+select stu_name from stu a inner join book_tran b on a.stu_id=b.stu_id inner join book_dept c on 
+b.book_id=c.book_id inner join dept d on c.dept_id=d.dept_id where dept_name in('cse');
+1.
+select stu_name from stu a inner join book_dept b on a.dept_id=b.dept_id inner join book_tran c on b.book_id=c.book_id where substr(stu_id,1,2)='ce';
+
+2.
+select dept_name,count(dept_name) from book_tran a inner join book_dept b on a.book_id=b.book_id inner join dept c on b.dept_id=c.dept_id inner join book d on b.book_id=d.book_id group by dept_name having avg(price)>2000;
+
+3.
+update book set book.price=price+1 where book.id in (select book_id from book_tran group by book_id having count(book_id)>5);

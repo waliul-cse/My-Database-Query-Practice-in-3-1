@@ -1,0 +1,25 @@
+
+--------------Case Opeartion--------------------
+
+update student_info
+set student_info.income = case when student_info.income>5000
+then student_info.income*1.06
+else student_info.income*1.05
+end;
+
+Task:Find the student year from student_id
+Solution:
+-------------------substr in case operation--------------------------
+ select 
+ (case when substr(a.student_id,3,2)=09
+ then 'Third Year'
+ when substr(a.student_id,3,2)=08
+ then 'Fourth Year'
+ when substr(a.student_id,3,2)=10
+ then '2nd Year'
+ when substr(a.student_id,3,2)=11
+ then '1st'
+ else null
+ end)student_Year
+ from student_info a;
+-----------------------------------------------------------------------

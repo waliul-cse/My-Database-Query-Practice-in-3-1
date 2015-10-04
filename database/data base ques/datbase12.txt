@@ -1,0 +1,88 @@
+create table dep
+(
+dep_id char(7),
+dep_name char(10),
+constraint pk primary key(dep_id)
+);
+
+create table emp
+(
+emp_id char(7),
+emp_name char(10),
+emp_age char(10),
+constraint pk1 primary key(emp_id)
+);
+
+
+create table emp_id
+(
+emp_id char(7),
+dep_id char(10)
+constraint pk_3 primary key(emp_id),
+constraint fk_1 foreign key(dep_id)
+references dept(dept_id)
+);
+
+create table build
+(
+buil_id char(7),
+buil_name char(10),
+constraint pk primary key(buil_id)
+);
+
+create table dept_build
+(
+dep_id char(7),
+buil_id char(10),
+constraint pk_4 primary key(buil_id),
+constraint fk_4 foreign key(dep_id)
+references dept(dept_id)
+);
+
+insert into dep values('ce11001','munna');
+insert into dep values('ce11002','nayem');
+insert into dep values('ce11003','apurbo');
+insert into dep values('ce11004','rakib');
+
+
+insert into emp values('em11001','munna','18');
+insert into emp values('em11002','nayem','19');
+insert into emp values('em11003','apurbo','44');
+insert into emp values('em11004','rakib','21');
+
+insert into emp_id values('em11001','ce11001');
+insert into emp_id values('em11002','ce11002');
+insert into emp_id values('em11003','ce11003');
+insert into emp_id values('em11004','ce11004');
+
+insert into build values('b11001','cse_b');
+insert into build values('b11002','ict_b');
+insert into build values('b11003','cs_b');
+insert into build values('b11004','ds_b');
+
+insert into dept_build values('ce11001','b11001');
+insert into dept_build values('ce11002','b11002');
+insert into dept_build values('ce11003','b11003');
+insert into dept_build values('ce11004','b11004');
+select * from dep;
+select * from emp;
+select * from emp_id;
+select * from build;
+select * from dept_build;
+
+create table dept_build
+(
+dep_id char(7),
+buil_id char(10),
+constraint pk_4 primary key(buil_id),
+constraint fk_4 foreign key(dep_id)
+references dept(dept_id)
+);
+select emp_name from build a inner join dept_build b on a.buil_id=b.buil_id inner join emp_id c on b.dep_id=c.dep_id inner join emp d on d.emp_id=c.emp_id;
+
+
+select max(emp.emp_age) as age from emp where emp.emp_age not in(select max(emp.emp_age) from emp);
+
+update emp set emp.emp_age =(case when emp_age>'20' 
+then '15'
+end);

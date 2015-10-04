@@ -1,0 +1,86 @@
+create table Depertment
+(
+   Dep_ID varchar (10),
+   Dep_Name varchar(10),
+   constraint pk_1 primary key (Dep_ID)
+);
+
+create table employee
+(
+   Emp_ID varchar(10),
+   Emp_Name varchar(10),
+   Emp_Age number(3),
+   constraint pk_3 primary key (Emp_ID)
+);
+
+create table Emp_Dep
+(
+    Emp_ID varchar(10),
+    Dep_ID varchar(10),
+    constraint pk_4 primary key (Emp_ID),
+    constraint fk_1 foreign key (Emp_ID) references employee (Emp_ID),
+    constraint fk_2 foreign key (Dep_ID) references depertment(Dep_ID)
+);
+
+create table building
+(
+    Building_ID varchar(10),
+    Building_Name varchar(10),
+    constraint pk_5 primary key (Building_ID)
+);
+
+create table Dep_Building
+(
+    Dep_ID varchar(10),
+    Building_ID varchar(10),
+    constraint fk_3 foreign key (Dep_ID) references Depertment(Dep_ID),
+    constraint fk_4 foreign key (Building_ID) references building(Building_ID)
+);
+
+
+insert into Depertment values('111','Cse');
+insert into Depertment values('112','Ict');
+insert into Depertment values('113','Te');
+insert into Depertment values('114','Bge');
+insert into Depertment values('115','Food');
+insert into Depertment values('116','math');
+
+insert into employee values('Emp_1','Abir',30);
+insert into employee values('Emp_2','Aba',27);
+insert into employee values('Emp_3','Faruk',35);
+insert into employee values('Emp_4','kobir',40);
+insert into employee values('Emp_5','Rasel',22);
+insert into employee values('Emp_6','Ferdous',34);
+
+insert into Emp_Dep values('Emp_1','112');
+insert into Emp_Dep values('Emp_2','114');
+insert into Emp_Dep values('Emp_3','113');
+insert into Emp_Dep values('Emp_4','115');
+insert into Emp_Dep values('Emp_5','111');
+insert into Emp_Dep values('Emp_6','116');
+
+insert into building values('b_1','mojib');
+insert into building values('b_2','Jiya');
+insert into building values('b_3','Khaleda');
+insert into building values('b_4','Hasina');
+insert into building values('b_5','der2');
+insert into building values('b_6','der1');
+
+insert into Dep_Building values('117','b_7');
+insert into Dep_Building values('113','b_5');
+insert into Dep_Building values('112','b_4');
+insert into Dep_Building values('114','b_2');
+insert into Dep_Building values('115','b_6');
+insert into Dep_Building values('116','b_3');
+
+2.Ans:
+select Emp_Name,Emp_age from employee where employee.Emp_Age=(select max(employee.Emp_Age) 
+from employee where Employee.emp_age < (select max (Emp_Age) from Employee));
+
+1.Ans:
+select emp_name from employee a inner join emp_dep b on b.Emp_ID=a.Emp_ID inner join dep_building c on b.dep_id=c.dep_id inner join building d on d.building_id=c.building_id where d.building_Name='Register';
+
+3.Ans:
+update employee set emp_age=60 where emp_age in(select emp_age from employee a inner join emp_dep b on a.emp_id=b.emp_id inner join depertment c on b.dep_id=c.dep_id where c.dep_name='Cse');
+
+exit;

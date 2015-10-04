@@ -1,0 +1,98 @@
+SET SERVEROUTPUT ON
+DECLARE 
+  BF_VAR BINARY_FLOAT;
+  BD_VAR BINARY_DOUBLE;
+BEGIN
+  BF_VAR :=270/35f;
+  BD_VAR := 140D/0.35;
+  DBMS_OUTPUT.PUT_LINE('BF:'||BF_VAR);
+  DBMS_OUTPUT.PUT_LINE('BD:'||BD_VAR);
+END;
+
+///////////// TABLLE PL///////////////
+
+CREATE TABLE PL
+(
+    a VARCHAR2(23),
+    b VARCHAR2(20)
+);
+INSERT INTO PL VALUES('SA','DS');
+INSERT INTO PL VALUES('SB','DS');
+INSERT INTO PL VALUES('SC','DS');
+
+DECLARE 
+    x VARCHAR2(23);
+    y VARCHAR2(20);
+BEGIN
+    SELECT a,b INTO x,y FROM PL;
+    INSERT INTO PL VALUES(Y,X);
+END;
+
+//////////////////TABLE T1/////////////////////////////
+  
+CREATE TABLE T1
+(
+    E NUMBER;
+    F NUMBER;
+); 
+***********PL/SQL************
+DECLARE 
+    I NUMBER :=1;
+    J NUMBER :=2;
+BEGIN 
+    LOOP 
+        I :=I+1;
+        J :=J+1;
+        INSERT INTO T1 VALUES(I,J);
+        EXIT WHEN I>20;
+    END LOOP;
+END;
+
+**********CURSOR****************
+DECLARE 
+   a T1.E%TYPE;
+   b T1.F%TYPE;
+   CURSOR T1_CURSOR IS 
+       SELECT E,F FROM T1 WHERE E<F;
+BEGIN 
+   OPEN T1_CURSOR;
+   LOOP
+       FETCH T1_CURSOR INTO a,b;
+       EXIT WHEN T1_CURSOR%NOTFOUND;
+       INSERT INTO T1 VALUES(b,a);
+   END LOOP;
+   CLOSE T1_CURSOR;
+END;
+
+//////////////////////////////////////////////////////////////////////////////
+
+CREATE TABLE T
+(
+    A NUMBER,
+    B NUMBER
+);
+
+DECLARE 
+    X T.A%TYPE;
+    Y T.B%TYPE; 
+BEGIN 
+    X:=1;
+    Y:=2;
+    LOOP
+         X:=X+1;
+         Y:=X+1;
+         INSERT INTO T VALUES(X,Y);
+         EXIT WHEN Y>20;
+    END LOOP;
+END;
+
+.
+RUN; 
+        
+        
+
+
+
+
+
+           

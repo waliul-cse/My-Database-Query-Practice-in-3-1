@@ -1,0 +1,77 @@
+create table student10
+(
+id varchar(20) not null,
+name varchar(20),
+dept varchar(20),
+year varchar(20),
+constraint pk1 primary key(id)
+);
+
+
+create table studentinfo10
+(
+id varchar(20) not null,
+name varchar(20),
+mobile varchar(20),
+dist varchar(20),
+income varchar(20),
+constraint pk11 primary key(id),
+constraint fk10 foreign key(id)
+references student10(id)
+);
+
+
+
+create table bankinfo13
+(
+id varchar(20) not null,
+accountno varchar(20),
+bname varchar(20),
+brname varchar(20),
+balance varchar(20),
+constraint pk13 primary key(id),
+constraint fk13 foreign key(id)
+references student10(id)
+);
+
+
+insert into student10 values('CE08010','Faisal','CSE','4th');
+insert into student10 values('CE09010','Sumon','CSE','3rd');
+insert into student10 values('IT10034','Abir','ICT','2nd');
+insert into student10 values('TE11036','Tutul','Textile','1st');
+insert into student10 values('IT09012','Rasel','ICT','2nd');
+insert into student10 values('TE10234','Shakil','Textile','2nd');
+insert into student10 values('ES08010','Tushar','ESRM','4th');
+insert into student10 values('ES09010','Faruk','ESRM','3rd');
+
+
+
+insert into studentinfo10 values('CE08010','Faisal','01722410844','Dhaka',4500);
+insert into studentinfo10 values('CE09010',Sumon','01911098567','Khulna',7000);
+insert into studentinfo10 values('IT10034','Abir','01552346789','Rajshahi',2000);
+insert into studentinfo10 values('TE11036','Tutul','01722426578','Barisal',9000);
+insert into studentinfo10 values('IT09012','Rasel','01671235678','Gazipur',3000);
+insert into studentinfo10 values('TE10234','Shakil','01712349876','Tangail',5600);
+insert into studentinfo10 values('ES08010','Tushar','01712456123','Bogra',3500);
+insert into studentinfo10 values('ES09010','Faruk','01712456123','Pabna',9500);
+
+
+
+insert into bankinfo13 values('CE08010',1,'a','Dhaka',5600);
+insert into bankinfo13 values('CE09010',2,'b','Khulna',2000);
+insert into bankinfo13 values('IT10034',3,'c','Rajshahi',3000);
+insert into bankinfo13 values('TE11036',4,'d','Barisal',8000);
+insert into bankinfo13 values('IT09012',5,'e','Gazipur',5500);
+insert into bankinfo13 values('TE10234',6,'f','Tangail',6500);
+insert into bankinfo13 values('ES08010',7,'g','Bogra',7500);
+insert into bankinfo13 values('ES09010',8,'h','Pabna',8500);
+
+
+
+
+1. select count(distinct name) from student10 where name like '%Fa%' or name like '%ar%';
+2. select sum( count(distinct bankinfo13.id)) from bankinfo13 group by bankinfo13.id having avg(bankinfo13.balance)>4000;
+3. update bankinfo13 set  bankinfo13.balance = case when bankinfo13.balance>4000 then bankinfo13.balance + .15*bankinfo13.balance and case when bankinfo13.balance<4000 then bankinfo13.balance + .10*bankinfo13.balance;
+4. select student10.id,student10.name,student10.dept,studentinfo10.mobile,bankinfo13.balance from student10,studentinfo10,bankinfo13 where student10.id=studentinfo10.id AND student10.id=bankinfo13.id;
+5. select count(id) from bankinfo13 where bankinfo13.balance between 1000 and 5000;
+6  update student10 set student10.name = 'Shafiq' where  bankinfo13.balance in(select bankinfo13.balance from bankinfo13 where bankinfo13.balance>7500);

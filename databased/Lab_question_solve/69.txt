@@ -1,0 +1,98 @@
+create table deptn
+(
+   dep_id varchar (10),
+   dept_name varchar(10),
+   constraint apk_r1 primary key (dep_id)
+);
+
+create table emplyeee12
+(
+   emp_id varchar(10),
+   emp_name varchar(10),
+   emp_age number(3),
+   constraint apk_31 primary key (emp_id)
+);
+
+create table emp_deptn
+(
+    emp_id varchar(10),
+    dep_id varchar(10),
+    constraint fk61 foreign key(emp_id) references emplyeee12 (emp_id),
+    constraint fk62 foreign key(dep_id) references deptn(dep_id)
+);
+
+create table salary
+(
+  salary_scale number(10),
+  salary_Amount number(10),
+  constraint apk_6 primary key(salary_scale)
+);
+
+
+create table emp_salary
+(
+   emp_ID varchar(10),
+   salary_scale number(10),
+   constraint fk_51 foreign key (emp_id) references emplyeee12(emp_id),
+   constraint fk_61 foreign key (salary_scale) references salary(salary_scale)
+);
+
+select * from Depertment;
+select * from employee12;
+select * from Emp_Dep;
+select * from salary;
+select * from emp_salary;
+insert into deptn values('111','Cse');
+insert into deptn values('112','Ict');
+insert into deptn values('113','Te');
+insert into deptn values('114','Bge');
+insert into deptn values('115','Food');
+insert into deptn values('116','math');
+
+insert into emplyeee12 values('Emp_1','Abir',30);
+insert into emplyeee12 values('Emp_2','Aba',27);
+insert into emplyeee12 values('Emp_3','Faruk',35);
+insert into emplyeee12 values('Emp_4','kobir',40);
+insert into emplyeee12 values('Emp_5','Rasel',22);
+insert into emplyeee12values('Emp_6','Ferdous',34);
+
+insert into emp_deptn values('Emp_1','112');
+insert into emp_deptn values('Emp_2','114');
+insert into emp_deptn values('Emp_3','113');
+insert into emp_deptn values('Emp_4','115');
+insert into emp_deptn values('Emp_5','111');
+insert into emp_deptn values('Emp_6','116');
+
+insert into salary values('1','900');
+insert into salary values('2','950');
+insert into salary values('3','1100');
+insert into salary values('4','1200');
+insert into salary values('5','1300');
+insert into salary values('6','800');
+
+insert into emp_salary values('Emp_3','1');
+insert into emp_salary values('Emp_2','2');
+insert into emp_salary values('Emp_6','3');
+insert into emp_salary values('Emp_4','5');
+insert into emp_salary values('Emp_5','4');
+insert into emp_salary values('Emp_1','6');
+
+1.
+select dept_name from salary a inner join emp_salary b on a.salary_scale=b.salary_scale inner join 
+emp_deptn c on b.emp_id=c.emp_id inner join deptn d on c.dep_id=d.dep_id group by dept_name having avg(salary_amount)>1000;
+
+2.select emp_name from emplyeee12  inner join emp_salary  on emplyeee12.emp_id=emp_salary.emp_id where salary_scale in('1');
+
+3.update emplyeee set emp_age=emp_age+10 where emp_age not in(select avg(emp_age) from emplyeee);
+update employee set emp_Age=emp_Age+10 where emp_age not in(select avg(employee.emp_age) from employee);
+
+
+
+1.
+SQL>select dept_name from deptn 
+inner join emp_deptn ON deptn.dep_id=emp_deptn.dep_id 
+inner join emp_salary ON emp_deptn.emp_id=emp_salary.emp_id
+ inner join salary ON emp_salary.salary_scale=salary.salary_scale 
+group by dept_name having avg(salary_amount)>1000;
+
+

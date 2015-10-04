@@ -1,0 +1,28 @@
+------------------------------Getting Balance From account No-------------------
+
+
+create table balance_info
+(
+id number(20),
+balance number(20)
+);
+
+insert into balance_info values(2,5000);
+
+select get_bal(1) from dual;
+
+
+CREATE or replace FUNCTION get_bal(acc_no IN NUMBER)
+   RETURN NUMBER 
+   IS 
+acc_bal NUMBER(10,2);
+BEGIN 
+   SELECT a.balance
+   INTO acc_bal 
+   FROM balance_info a
+   WHERE a.id = acc_no; 
+   RETURN(acc_bal); 
+ END;
+
+
+

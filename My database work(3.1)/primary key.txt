@@ -1,0 +1,15 @@
+
+
+
+  .......... Create Table.........
+Create Table Persons
+(P_Id   int not null primary key,
+First_name varchar(39) NOT NULL,
+Adress   varchar(20),
+City     varchar(20));
+
+insert into persons values('101','Amin','Mohadebpur','Naogaon');
+insert into persons values('102','Bikash','Bagdob','Nazipur');
+insert into persons values('103','kamal','Neyamot','Naogaon');
+insert into persons values('104','Nasir','Sapahar','Kulna');
+insert into persons values('105','Belal','Dillab','dhaka');

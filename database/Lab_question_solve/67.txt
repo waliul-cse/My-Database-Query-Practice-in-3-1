@@ -1,0 +1,46 @@
+create table employee(employee_id varchar(8),employee_name char(15),age number(3,0),sex char(7),constraint pk_1 primary key(employee_id));
+
+create table task(task_id varchar(8),task_name char(12),estimatedHour number(3,0),actualHour number(3,0),constraint pk_2 primary key(task_id));
+
+create table priority(priority_id varchar(8),priority_name char(13),constraint pk_3 primary key(priority_id));
+
+create table task_priority(task_id varchar(8),priority_id varchar(8),constraint fk_1 foreign key(task_id) references task(task_id),constraint fk_2 foreign key(priority_id) references priority(priority_id));
+
+create table task_assignment(task_id varchar(8),creator_id varchar(8),developer_id varchar(8),constraint fk_13 foreign key(task_id) references task(task_id),constraint fk_103 foreign key (creator_id) references employee(employee_id),constraint fk_15 foreign key(developer_id) references employee(employee_id));
+
+
+insert into employee values('a101','monjur',21,'male');
+insert into employee values('a102','rubel',20,'male');
+insert into employee values('a103','rajib',22,'male');
+insert into employee values('a104','moon',25,'female');
+insert into employee values('a105','ferdous',23,'male');
+
+insert into task values('b10','first',10,20);
+insert into task values('b11','second',15,30);
+insert into task values('b12','third',20,40);
+insert into task values('b13','four',25,45);
+insert into task values('b14','fifth',30,50);
+
+insert into priority values('p200','pFirst');
+insert into priority values('p201','pSecond');
+insert into priority values('p202','pThird');
+insert into priority values('p203','pFourth');
+insert into priority values('p204','pFifth');
+
+insert into task_priority values('b10','p201');
+insert into task_priority values('b13','p201');
+insert into task_priority values('b14','p202');
+insert into task_priority values('b13','p204');
+
+insert into task_assignment values('b10','a101','a103');
+insert into task_assignment values('b13','a105','a102');
+insert into task_assignment values('b14','a104','a101');
+insert into task_assignment values('b10','a103','a103');
+
+1.
+update priority set priority_name = 'priority3' where priority_id in(select priority_id from task_priority where task_id in (select task_id from task_assignment group by (task_id) having count(task_id)>5)); 
+
+2.
+select task_name from task where task_id not in(select task_id from task_assignment);
+
+3.

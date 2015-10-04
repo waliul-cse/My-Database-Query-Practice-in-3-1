@@ -1,0 +1,58 @@
+.....................................Primary key.....................
+Syntax of primary key:
+
+CREATE TABLE table_name
+(
+column1 datatype null/not null,
+column2 datatype null/not null,
+...
+CONSTRAINT constraint_name PRIMARY KEY (column1, column2, ... column_n)
+);
+
+...........Table with primary key.............................................(waliul,Dept of CSE,MBSTU)
+Create Table confidence
+(Id varchar(14),
+Name varchar(15),
+Dept varchar(15),
+Balance number(16),
+Constraint dk primary key(id)
+);
+
+Table created.
+....................................Table with foreign key...................................
+
+Create Table hardwork
+(h_id varchar(15),
+District varchar(15),
+Phone_no int,
+Constraint mk foreign key(h_id)
+references confidence(id));
+
+Table created.
+
+......................................   .....................................................
+Create Table honesty
+(hh_id varchar(17),
+designation varchar(15),
+Constraint hk primary key(hh_id),
+COnstraint nk foreign key(hh_id)
+references confidence(id));
+
+..........................Alter Table to add primary key...........................................
+
+Create Table change_p
+(c_id varchar(15),
+pin_no int
+);
+
+alter Table change_p
+add primary key(c_id);
+............................change primary key more than one column..............................
+
+Create  Table change_pp
+(c_id varchar(15),
+name varchar(15),
+dept varchar(15));
+........................alter command...............................................
+alter Table change_pp
+add primary key(c_id,name);

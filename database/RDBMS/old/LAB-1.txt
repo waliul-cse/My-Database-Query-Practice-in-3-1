@@ -1,0 +1,54 @@
+create table studentinfo
+(
+id varchar2(10) not null,
+dist varchar(10),
+thana varchar(10),
+mobile varchar(10),
+constraint pk6 primary key(id),
+constraint fk6 Foreign key(id)
+references student3(id)
+);
+
+
+create table accountinfo
+(
+id varchar2(10) not null,
+balance varchar(10),
+savings varchar(10),
+loan varchar(10),
+constraint pk7 primary key(id),
+constraint fk7 Foreign key(id)
+references student3(id)
+);
+
+
+insert into student3 values('ce-11025','jamal','cse','2-2');
+
+insert into student3 values('ce-10020','shihab','cse','3-2');
+
+insert into student3 values('ce-1005','kamal','ict','3-2');
+
+
+
+insert into studentinfo values('ce-11025','dhaka','dhanmondi','0191160130');
+
+insert into studentinfo values('ce-10020','dhaka','kadamtali','0191563586');
+
+insert into studentinfo values('ce-1005','comilla','laksham','0171526656');
+
+
+insert into accountinfo values('ce-11025','1000','2000','5000');
+
+insert into accountinfo values('ce-10020','3000','5000','3000');
+
+insert into accountinfo values('ce-1005','8000','1000','9000');
+
+select * from student3;
+
+select name,id,dept from student3 where year='3-2';
+
+select count(distinct student3.dept)  from student3 ;
+
+select student3.id,student3.name,studentinfo.dist,studentinfo.mobile from student3,studentinfo where student3.id=studentinfo.id;
+
+select * from accountinfo where accountinfo.balance>'5000';

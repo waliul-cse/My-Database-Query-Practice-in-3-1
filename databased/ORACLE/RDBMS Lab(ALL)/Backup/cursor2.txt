@@ -1,0 +1,114 @@
+create table student_1
+( id integer primary key,
+  name char(10)
+);
+
+
+create table dept
+( code char(4) primary key,
+  name char(50)
+);
+
+create table studept
+( stid integer,
+  deptcode char(4),
+  constraint pk primary key (stid,deptcode),   
+  constraint fk10 foreign key (stid) references student_1(id),
+  constraint fk12 foreign key (deptcode) references dept(code) 
+);
+
+insert into student_1 values(8001,'a');
+insert into student_1 values(8002,'b');
+insert into student_1 values(8003,'c');
+insert into student_1 values(8004,'d');
+insert into student_1 values(8005,'e');
+insert into student_1 values(7001,'f');
+insert into student_1 values(7002,'g');
+insert into student_1 values(7003,'h');
+insert into student_1 values(7004,'i');
+insert into student_1 values(7005,'j');
+
+
+insert into dept values('cse','computer science');
+insert into dept values('ict','information technology');
+
+insert into studept values(8001,'cse');
+insert into studept values(8002,'cse');
+insert into studept values(8003,'cse');
+insert into studept values(8004,'cse');
+insert into studept values(8005,'cse');
+insert into studept values(7001,'ict');
+insert into studept values(7002,'ict');
+insert into studept values(7003,'ict');
+insert into studept values(7004,'ict');
+insert into studept values(7005,'ict');
+---------------------------------------------------------------------------------
+
+Create or replace procedure test5
+(dcode IN char,
+mycur out sys_refcursor
+)is 
+declare 
+tempid integer;
+begin
+open mycur for
+select id from student,studept where student.id= studept.stid and studept.deptcode=dcode;
+LOOP
+          FETCH mycur INTO tempid;
+          EXIT WHEN mycur%NOTFOUND;
+   delete from studept where stid=tempid;
+          delete from student where id=tempid;
+      END LOOP;
+end;
+/
+
+
+
+
+
+CREATE or replace PROCEDURE delst
+(dcode IN char,
+StIdCursor out sys_refcursor
+) as
+ 
+   tempid integer;
+  CURSOR StIdCursor IS
+    select id from student,studept where student.id= studept.stid and studept.deptcode=dcode;
+  BEGIN
+
+      OPEN StIdCursor for 
+      LOOP
+          FETCH StIdCursor INTO tempid;
+          EXIT WHEN StIdCursor%NOTFOUND;
+   delete from studept where stid=tempid;
+          delete from student where id=tempid;
+      END LOOP;
+      CLOSE StIdCursor;
+  END delst;
+ .
+ run;
+
+//to run the procedure
+BEGIN delst('cse'); 
+END;
+.
+run;
+----------------------------------------------------------------------------------------
+CREATE PROCEDURE delst(dcode IN char) AS
+ 
+   tempid integer;
+  CURSOR StIdCursor IS
+    select id from student,studept where student.id= studept.stid and studept.deptcode=dcode;
+  BEGIN
+
+      OPEN StIdCursor;
+      LOOP
+          FETCH StIdCursor INTO tempid;
+          EXIT WHEN StIdCursor%NOTFOUND;
+   delete from studept where stid=tempid;
+          delete from student where id=tempid;
+      END LOOP;
+      CLOSE StIdCursor;
+  END delst;
+ .
+ run;

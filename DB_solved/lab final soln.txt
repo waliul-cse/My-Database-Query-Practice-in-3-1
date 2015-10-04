@@ -1,0 +1,87 @@
+
+.....................................Table department.......................
+Create Table Department
+(Dept_id varchar(15),
+Dept_name varchar(17),
+Constraint dept_pk primary key(dept_id)
+);
+
+insert into department values('d101','CSE');
+insert into department values('d102','IT');
+insert into department values('d103','BBA');
+
+......................Employee Table........................................
+Create Table employee
+(emp_id varchar(15),
+emp_name varchar(15),
+emp_age  int,
+constraint emp_pk primary key(emp_id)
+);
+
+insert into employee values('e101','Fazlul vai',30);
+insert into employee values('e102','Md.Hasib',50);
+insert into employee values('e103','Ab.Azad',40);
+...................Employee-Department Table................................
+
+Create Table emp_department
+(emp_id varchar(15),
+dept_id varchar(15),
+Constraint emp_pk1 foreign key(emp_id)
+references employee(emp_id),
+constraint dept_pk1 foreign key(dept_id)
+references department(dept_id)
+);
+
+
+Table created.
+
+insert into emp_department values('e101','d101');
+insert into emp_department values('e102','d102');
+insert into emp_department values('e103','d103');
+
+.................................Building Table...............................
+
+Create Table building
+(building_id varchar(15),
+building_name varchar(15),
+Constraint bl_pk primary key(building_id)
+);
+
+insert into building values('b101','Register');
+
+insert into building values('b102','Academic');
+
+insert into building values('b103','Proctor off.');
+
+................................Dept_building.................................
+
+Create Table dept_building
+(dept_id varchar(16),
+building_id varchar(15),
+Constraint bl_pk2 foreign key(building_id)
+references building(building_id),
+constraint dept_pk3 foreign key(dept_id)
+references department(dept_id)
+);
+
+
+insert into dept_building values('d101','b101');
+
+insert into dept_building values('d102','b102');
+
+insert into dept_building values('d103','b103');
+
+..........................solution of query no:1................................
+
+select emp_name from employee 
+INNER JOIN emp_department ON employee.emp_id=emp_department.emp_id
+inner join dept_building ON emp_department.dept_id=dept_building.dept_id
+inner join building ON building.building_id=dept_building.building_id
+where building_name like '%Register%';   
+ 
+
+EMP_NAME
+-----------
+Fazlul vai
+
+.

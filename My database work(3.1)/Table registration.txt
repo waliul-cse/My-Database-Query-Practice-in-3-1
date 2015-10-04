@@ -1,0 +1,111 @@
+insert into registrations values (1, 'SQL',date '1999-04-12',4 );
+insert into registrations values (2, 'Ora',date '1999-05-12',5);
+insert into registrations values (3, 'SQL',date '1999-12-13',NULL);
+
+insert into registrations values (4, 'OAU',date '1999-08-10',4);
+insert into registrations values (5, 'OAU',date '2000-09-27',5   );
+
+...................How to add a column in a table......
+
+      1.     alter table registrations
+           add  (salary number(4));
+
+So syntax:
+       ALTER  TABLE table_name
+       add( column_name(which want to add in table) datatype)); 
+
+>>ALTER TABLE table_name
+  ADD column_name column-definition;
+
+
+>>Syntax #2
+
+To add multiple columns to an existing table, the SQL ALTER TABLE syntax is:
+
+ALTER TABLE table_name
+  ADD (column_1 column-definition,
+       column_2 column-definition,
+       ...
+       column_n column_definition);
+
+
+
+
+....................How to drop recently added column.............
+    > alter table registrations
+    > drop  Description;
+
+
+So it can possible to drop a column froom a table:
+Syntax:
+       >>  ALTER TABLE table_name 
+       >>Drop column column_name;
+
+
+.........................How to modify a column.................
+             
+
+          >>Alter table registrations modify s_count number(10);
+
+....that means we want to change the size of datatype then this rules is followed
+
+
+Now we want to change the name of a column it can possible through alter statements:
+
+
+>>>Alter table registtrations Rename evaluation to s_count;
+
+
+SYNTAX:
+
+ALTER TABLE table_name Rename old column_name to new column name:
+
+
+>>SQL ALTER TABLE - Modifying column(s) in a table
+
+Syntax #1
+
+...........To modify a column in an existing table, the SQL ALTER TABLE syntax is:......
+
+>>>>ALTER TABLE table_name
+  MODIFY column_name column_type;
+
+Syntax #2
+
+.............To modify multiple columns in an existing table, the SQL ALTER TABLE syntax is:
+
+
+   >>>ALTER TABLE table_name
+     MODIFY (column_1 column_type,
+          column_2 column_type,
+          ...
+          column_n column_type);
+
+..................How to change the datatype of a column.............
+
+           >>Alter table table_name modify column_name datatype());
+
+
+................How to view a table datatype...........
+
+
+>>DESC(describe) table_name;
+throug this we can show a table's datatype.
+
+
+
+
+.......................SQL ALTER TABLE - Renaming a table............................
+
+
+
+                   >>ALTER TABLE table_name
+                  >>RENAME TO new_table_name;
+
+
+
+
+
+
+
+

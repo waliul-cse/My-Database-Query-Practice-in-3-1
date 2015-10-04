@@ -1,0 +1,82 @@
+                 
+
+                                      ****Inner join****
+
+SQL INNER JOIN Keyword:
+
+The INNER JOIN keyword return rows when there is at least one match in both tables.
+
+SQL INNER JOIN :
+                     
+
+                   select column_name(s)from table_name1
+                 
+                   inner join table_name2
+                   ON table_name1.column_name=table_name2.column_name;
+ 
+
+
+       ...............CREATE TABLE FOR INNER JOIN EXAMPLE...............
+              
+               Table persons:
+
+          Create Table persons
+              (P_id    numeric(20)   NOT NULL PRIMARY KEY,
+              Last_name  varchar(20),
+              First_name  varchar(20),
+              Adress      varchar(20),
+              City         varchar(30));
+
+
+
+
+insert into persons values('1','Islam', 'Habib','Mirpur','DHAKA');
+
+insert into persons values('2','Rhaman', 'Motiur','Banani','DHAKA');
+
+insert into persons values('3','Islam', 'Masud','Naogaon','Rajshahi');
+
+               Table orders:
+Create Table orders
+   (O_id    numeric(20),
+   Order_no  int,
+   P_id numeric(20));
+
+insert into orders values('1','22330','1');
+insert into orders values('2','22331','2');
+insert into orders values('3','22332','3');
+insert into orders values('4','22362','5');
+
+
+     select persons.Last_name,Persons.First_name ,Orders.Order_no from persons
+     inner join orders
+     on persons.P_id=orders.P_id
+order by last_name;
+
+
+          SQL LEFT JOIN Syntax:
+
+    SELECT column_name(s)
+    FROM table_name1
+    LEFT JOIN table_name2
+    ON table_name1.column_name=table_name2.column_name;
+
+
+              ....Left join.........
+>>select persons.Last_name,persons.First_name,Orders.order_no from persons left join orders 
+on persons.p_id=orders.P_id;
+
+
+...........Right join..........
+   >>select persons.Last_name,persons.First_name,Orders.order_no from persons 
+    Right join orders 
+    on persons.p_id=orders.P_id;
+
+
+...........Full join...........
+    select persons.Last_name,persons.First_name,Orders.order_no from persons 
+    full join orders 
+    on persons.p_id=orders.P_id;
+
+
+

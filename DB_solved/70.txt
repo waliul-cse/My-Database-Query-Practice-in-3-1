@@ -1,0 +1,92 @@
+create table book
+(
+book_id char(14),
+book_name char(13),
+publisher char(17),
+price number(9),
+constraint b_pk primary key(book_id)
+);
+
+insert into book values('b101','SQL','agnibina','250');
+insert into book values('b102','Oracle','Vinnorokom','200');
+insert into book values('b103','C#','suk_paki','300');
+insert into book values('b104','JAVA','onno_pub','400');
+
+----------------------tble Depertment-------------------
+
+create table Dept2
+(
+   Dept_ID varchar (15),
+   Dept_name varchar(15),
+   constraint de_pk primary key (Dept_ID)
+);
+
+insert into Dept2 values('d101','CSE');
+insert into Dept2 values('d102','IT');
+insert into Dept2 values('d103','TE');
+insert into Dept2 values('d104','EEE');
+
+
+create table student2
+(
+stu_id varchar(14),
+stu_name varchar(14),
+dept_id varchar(14),
+semester_id varchar(15),
+constraint st_pk primary key(stu_id),
+constraint dep_pk foreign key(dept_id)
+references dept2(dept_id)
+);
+
+insert into student2 values('CE11002','Abir','d101','2-1');
+insert into student2 values('TE11032','Biddut','d102','3-1');
+insert into student2 values('IT11023','jony','d103','4-1');
+insert into student2 values('BG11024','shovon','d104','1-1');
+
+create table book_dept
+(
+book_id char(14),
+dept_id varchar(15),
+constraint db_pk foreign key(book_id)
+references book(book_id),
+constraint Db_pk3 foreign key(dept_id)
+references dept2(dept_id)
+);
+
+insert into book_dept values('b101','d101');
+insert into book_dept values('b102','d102');
+insert into book_dept values('b103','d103');
+insert into book_dept values('b104','d104');
+
+
+
+create table book_transaction
+(
+book_id char(15),
+stu_id varchar(16),
+Issudate DATE,
+duedate DATE,
+constraint b_pk2 foreign key(book_id)
+references book(book_id),
+constraint st_pk2 foreign key(stu_id)
+references student2(stu_id)
+);
+
+
+insert into book_transaction values('b101','CE11002','20-JAN-2013','30-JAN-2012');
+insert into book_transaction values('b102','TE11032','10-JUN-2012','1-FEB-2012');
+insert into book_transaction values('b103','IT11023','15-FEB-2011','24-April-2010');
+insert into book_transaction values('b104','BG11024','14-March-2010','29-JUN-2012');
+
+1.Ans:
+select name from student a inner join book_dept b on a.dep_id=b.dept_id 
+inner join book_tran c on b.book_id=c.book_id
+inner join depertment d on d.dep_id=a.dep_id where d.dep_name='Cse';  
+
+2.Ans:
+
+
+
+3.Ans:(4 br je boita tola hoise)
+update book set book.price=price+1 where book.id in (select book_id from book_tran group by book_id having count(book_id)>5);
+

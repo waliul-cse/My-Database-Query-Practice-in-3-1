@@ -1,0 +1,86 @@
+.........................................Table Dept..................................
+Create Table Dept
+(dept_id varchar(15),
+Dept_name varchar(14),
+Constraint d_pk primary key(dept_id)
+);
+
+insert into dept values('d101','CSE');
+
+insert into dept values('d102','ICT');
+.........................................Table employ.................................
+ Create Table employ
+ (emp_id varchar(15),
+emp_name varchar(15),
+ emp_age int,
+ constraint em_pk primary key(emp_id));
+
+
+insert into employ values('e101','ASAD',30);
+
+insert into employ values('e102','WALIUL',40);
+.........................................Table employ_dept............................
+Create Table employ_dept
+(emp_id varchar(15),
+dept_id varchar(15),
+Constraint empl_pk foreign key(emp_id)
+references employ (emp_id),
+Constraint d_pk1 foreign key(dept_id)
+references dept(dept_id)
+);
+
+
+insert into employ_dept values('e101','d101');
+
+insert into employ_dept values('e102','d102');
+.........................................Table salary2................................
+Create Table Salary2
+(salary_scale varchar(13),
+Salary_amount number(9),
+constraint s_pk primary key(salary_scale)
+);
+
+
+insert into salary2 values('scale_1',20000);
+
+insert into salary2 values('scale_2',30000);
+insert into salary2 values('scale_3',30000);
+.........................................Table emp_salary............................
+Create Table emp_salary
+(emp_id varchar(16),
+salary_scale varchar(15),
+Constraint e_pk1 foreign key(emp_id)
+references employ(emp_id),
+Constraint s_pk1 foreign key(salary_scale)
+references salary2(salary_scale)
+);
+
+
+insert into emp_salary values('e101','scale_1');
+
+insert into emp_salary values('e102','scale_2');
+insert into emp_salary values('e103','scale_3');
+.........................................solution query no:1............................
+
+select dept.dept_name from dept
+inner join employ_dept ON dept.dept_id=employ_dept.dept_id
+inner join emp_salary ON employ_dept.emp_id=emp_salary.emp_id 
+inner join salary2 ON emp_salary.salary_scale=salary2.salary_scale
+where salary_amount>(select avg(salary_amount) from salary2 
+group by emp_id having avg(salary_amount)>10000);
+
+
+................................................solution of query no:2...........................
+select emp_name from EMPLOY inner join emp_salary On employ.emp_id=emp_salary.emp_id
+where salary_scale='scale_1';
+
+.....................................query no 3:..................................................
+
+update employ set emp_age=emp_age*10 
+where emp_age NOT IN(select avg(emp_age) from employ);
+
+
+
+
+
+

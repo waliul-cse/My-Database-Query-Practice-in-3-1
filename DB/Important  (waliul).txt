@@ -1,0 +1,196 @@
+
+     Create Table Lab
+    (Id  varchar(16),
+     Name varchar(20),
+     Dept  varchar(15),
+     CGPA  float,
+     Acc_no  number(9),
+     City  varchar(15),
+     Balance  number(9)
+     Salary number(9));
+
+
+                ................insert.....................
+
+insert into lab values('CE101','Munna','CSE',3.60,101.1,'Dhaka',500,30000);
+
+insert into lab values('CE102','Naiem','ICT',3.30,101.2,'Naogaon',700,40000);
+
+insert into lab values('CE103','Apurbo','TE',3.40,101.3,'Raj',300,50000);
+
+insert into lab values('CE104','Shovon','CSE',3.90,101.4,'Khulna',500,20000);
+
+insert into lab values('CE105','waliul','BBA',3.20,101.5,'RAJ',100,30000);
+
+insert into lab values('CE106','Shovon','CSE',3.10,101.6,'Rangpur',400,30000);
+  
+
+
+...............................IN QUERY..............................
+
+SQL> select name,dept,salary from lab where city in('Dhaka','Khulna');
+
+NAME                 DEPT                SALARY
+-------------------- --------------- ----------
+Munna                CSE                  30000
+Shovon               CSE                  20000
+
+------------------------------------------NOT IN-------------------------------------------------------
+
+SQL> select name,dept,salary from lab where city NOT IN('Dhaka','Khulna');
+
+NAME                 DEPT                SALARY
+-------------------- --------------- ----------
+Naiem                ICT                  40000
+Apurbo               TE                   50000
+waliul                 BBA                  30000
+Shovon               CSE                  30000
+
+
+
+_______________________________________________________GROUP BY_________________________________________________________
+
+
+SQL> select name,sum(balance) from lab group by name;
+
+NAME                 SUM(BALANCE)
+-------------------- ------------
+Munna                         500
+Nila                          100
+Apurbo                        300
+Shovon                        900
+Naiem                         700
+
+
+
+
+SQL> select name,dept,city,avg(salary) from lab group by name,dept,city;
+
+NAME                 DEPT            CITY            AVG(SALARY)
+-------------------- --------------- --------------- -----------
+Shovon               CSE             Rangpur               30000
+Shovon               CSE             Khulna                20000
+Nila                 BBA             Barisal               90000
+Naiem                ICT             Naogaon               40000
+Munna                CSE             Dhaka                 30000
+Apurbo               TE              Raj                   50000
+
+
+
+
+SQL> select name,dept,max(salary) from lab where city IN('Dhaka') group by name,dept;
+
+NAME                 DEPT            MAX(SALARY)
+-------------------- --------------- -----------
+Munna                CSE                   30000
+
+
+
+
+
+SQL> select name,dept,sum(balance) from lab where name like '%Sh%' group by name,dept;
+
+NAME                 DEPT            SUM(BALANCE)
+-------------------- --------------- ------------
+Shovon               CSE                      900
+
+
+_______________________________________________________-Aggregate function_______________________________
+
+select max(salary) from lab;
+
+MAX(SALARY)
+-----------
+      90000
+
+
+
+
+________________________________________________who got the maximum salary_________________________________________________-
+
+SQL> select name from lab where salary=(select max(salary) from lab);
+
+NAME
+--------------------
+Nila
+
+
+
+SQL> 
+SQL> select name,dept,salary from lab where salary=(select max(salary) from lab);
+
+NAME                 DEPT                SALARY
+-------------------- --------------- ----------
+Nila                 BBA                  90000
+
+
+
+SQL> select name,dept,city from lab where salary=(select max(salary) from lab);
+
+NAME                 DEPT            CITY
+-------------------- --------------- ---------------
+Nila                 BBA             Barisal
+
+____________________________________--Finding second highest salary in this Table----------------------------------
+
+
+SQL> select max(salary) from lab where salary NOT IN(select max(salary) from lab);
+
+           MAX(SALARY)
+           -----------
+            50000
+
+_______________________________________Another way to get second highest salary-----------------------------
+)
+
+select max(salary) from lab where salary<>(select max(salary) from lab);
+
+MAX(SALARY)
+-----------
+      50000
+Note: Here '<>' is not equal sign
+
+
+
+-________________________________________To get nth salary_________________________________________
+
+
+     
+     syntax:
+     SELECT salary(column_name) FROM table_name WHERE salary=
+    (SELECT MAX(salary) FROM (SELECT DISTINCT salary FROM table_name WHERE rownum<=n-1 ORDER BY salary DESC));
+
+Here:
+    n=nth employee salary
+     
+
+
+SQL> select salary from lab where salary=(select max(salary) from(select distinct salary from lab wh
+ere  rownum<=3-1 order by salary desc));
+
+    SALARY
+----------
+     40000
+
+
+
+_________________________________________________Subquery__________________________________________________
+
+SQL> select name,dept,salary from lab where salary>(select avg(salary) from lab);
+
+NAME                 DEPT                SALARY
+-------------------- --------------- ----------
+Apurbo               TE                   50000
+
+
+
+
+
+SQL> select id,name,dept ,salary from lab where salary>(select avg(salary) from lab) order by id des
+c;
+
+ID               NAME                 DEPT                SALARY
+---------------- -------------------- --------------- ----------
+CE105            Nila                 BBA                  90000
+CE103            Apurbo               TE                   50000
+Nila                 BBA                  90000

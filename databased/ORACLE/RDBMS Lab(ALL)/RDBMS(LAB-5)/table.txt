@@ -1,0 +1,43 @@
+create table student_10
+( id integer primary key,
+  name char(10)
+);
+
+insert into student_10 values(8001,'a');
+insert into student_10 values(8002,'b');
+insert into student_10 values(8003,'c');
+insert into student_10 values(8004,'d');
+insert into student_10 values(8005,'e');
+insert into student_10 values(7001,'f');
+insert into student_10 values(7002,'g');
+insert into student_10 values(7003,'h');
+insert into student_10 values(7004,'i');
+insert into student_10 values(7005,'j');
+
+
+----------------------------------------
+insert into student_10 values(7007,'l');
+insert into student_10 values(7008,'M');
+insert into student_10 values(7009,'n');
+insert into student_10 values(7010,'o');
+insert into student_10 values(7011,'P');
+
+
+create table account
+(
+acct_id int,
+cust_id int,
+cust_name varchar(20)  
+)
+
+
+ create or replace trigger tri_account
+ before insert or update
+ on account
+ for each row
+ begin
+     IF (:new.acct_id = 2 and :new.cust_id = 23) THEN 
+         raise_application_error( -20001, 'No insertion with id 2 and 23.');
+     END IF; 
+ end;
+ /

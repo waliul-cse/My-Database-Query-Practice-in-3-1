@@ -1,0 +1,63 @@
+The Syntax for creating a trigger is:
+
+CREATE [OR REPLACE ] TRIGGER trigger_name
+{BEFORE | AFTER | INSTEAD OF }
+{INSERT [OR] | UPDATE [OR] | DELETE}
+[OF col_name]
+ON table_name
+[REFERENCING OLD AS o NEW AS n]
+[FOR EACH ROW]
+WHEN (condition)
+DECLARE
+Declaration-statements
+BEGIN
+Executable-statements
+EXCEPTION
+Exception-handling-statements
+END;
+
+____________________________________________create table Account___________________
+Create Table account
+(Id  varchar(15),
+Name  varchar(15),
+Age   int,
+address varchar(16),
+Salary  number(8));
+
+_______________________________________
+    create table company(
+     product_id number(4) not null,
+     company_id NUMBER(8) not null,
+     company_short_name varchar2(30) not null,
+     company_long_name varchar2(60)
+     );
+insert into company values(1,1001,'A Inc.','Long Name A Inc.');
+insert into company values(1,1002,'B Inc.','Long Name B Inc.');
+insert into company values(1,1003,'C Inc.','Long Name C Inc.');
+insert into company values(2,1004,'D Inc.','Long Name D Inc.');
+insert into company values(2,1005,'E Inc.','Long Name E Inc.');
+insert into company values(2,1006,'F Inc.','Long Name F Inc.');
+
+______________________________________________________________________-
+    create table product_audit
+      (
+     product_id number(4) not null,
+      num_rows number(8)
+     );
+
+
+
+
+CREATE OR REPLACE TRIGGER myTrigger
+ AFTER INSERT ON company
+ FOR EACH ROW
+ BEGIN
+ UPDATE product_audit
+ SET num_rows =num_rows+1
+ WHERE product_id =:NEW.product_id;
+ IF (SQL%NOTFOUND) THEN
+ INSERT INTO product_audit VALUES (:NEW.product_id,1);
+ END IF;
+ END;
+ /
+Trigger created

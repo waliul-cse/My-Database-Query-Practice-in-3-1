@@ -1,0 +1,147 @@
+  ..........................show table.......................
+
+ select * from myTable;
+
+........................... where clause.............................
+
+select * from myTable where myTable.Balance>2000;
+select * from myTable where myTable.ID='CE10032';
+
+...........................Aggregate function..........................
+
+select avg(myTable.Balance)as average from myTable;
+select max/min(myTable.Balance)as maximum/minimum from myTable;
+select count(myTable.Balance) from myTable where myTable.Balance>2000;
+...........................Asc/desc order.................................
+
+select * from myTable order by myTable.ID desc/asc;
+
+...........................update table.....................................
+
+update myTable set myTable.ID='CE10039',myTable.Name='Sumonna' where myTable.ID='CE10030';
+
+...........................insert value.......................................
+
+insert into myTable values('CE10029','Shafi','CSE',3.56,10500);
+
+............................in/not in/between............................
+
+select * from test where test.id in/not in('CE1002','CE1004');
+select * from test where test.balance between 1000 and 3000;
+
+select student_info.dept,avg(balance) as avg from student_info group by dept having avg(balance)>3800;
+.............................group by/having clause.............................
+
+select dept.avg(bal)from test_1 group by dept;
+select dept,avg(bal)from test1 group by dept having avg(bal)>1500;
+
+.............................like.............................................
+
+select name from test2 where name like'%sh%';
+select name from test2 where name like'sh%';
+
+
+..............................upper/lower case.................................
+
+select upper(name) from test_1;
+select lower(name)from test_1;
+
+..............................subquery......................................
+
+select max(balance) from test_1 where balance < (select max(balance) from test_1);
+
+select name from student_info where balance in(select max(balance) from student_info where balance<(select max(balance) from student_info));
+select max(balance) from test_1 where balance < (select max(balance) from test_1);
+.............................show all table that has been created in oracle................................
+
+select * from tabs;
+
+..............................arithmetic operation............................................
+
+select 100000-1 from dual;
+
+..................................case........................................
+
+select(case
+when substr(id,4,2)=08 
+then '4th year' 
+when substr(id,4,2)=09 
+then '3rd year' 
+when substr(id,4,2)=10 
+then '2nd year'
+when substr(id,4,2)=12 
+then '1st year'
+else 'not a student at all'
+end) as stu_year
+from tee;
+
+update student_info set name=(case
+when balance=1000 
+then 'fokir' 
+when balance=2000
+then 'kotal' 
+when balance=3000 
+then 'uujir'
+when balance=4000 
+then 'najir'
+when balance=5000 
+then 'senapoti'
+else 'raja'
+end);
+..............................update case..........................................
+
+update test_5 set balance=(case
+when balance=10000
+then balance+100
+when balance=9000
+then balance+500
+when balance=7000
+then balance+300
+else balance+1000
+end);
+
+...............................join+subquery...........................................
+
+select stname,bal from(select stname,bal from a,b where a.id=b.id)where bal<7000;
+
+select c.cust_nm,c.loan_no from c inner join d on c.loan_no=d.loan_no where d.be_nm='motijil'and cust_nm in(select cust_nm from cu where id not in(7,8,9));
+
+..................................union...............................................
+
+select name from customer1
+union
+select name from customer2;
+
+................................joining...............................................
+
+select * from customer4 left join loan on customer4.id=loan.id;
+select * from loan right join customer4 on customer4.id=loan.id;
+select * from customer4 x left join loan y on x.id=y.id;
+select * from a natural left join b;
+select * from b natural right join a;
+select stname.bal from(select * from a inner join b on a.iid=b.id);
+select * from customer4 left outer join loan on customer4.id=loan.id;
+select * from customer4,loan where customer4.id=loan.id;
+select * from customer4 natural left outer join loan;
+select * from customer4 natural right outer join loan;
+
+..............................primary/foreign key....................................
+
+create table dell
+(id varchar2(10) not null,
+dept char(10),
+year varchar2(10),
+constraint pk_1 primary key(id));
+
+create table hp
+(id varchar2(10) not null,
+name char(10),
+cgpa number(5,2),
+constraint pk_2 primary key(name,cgpa),
+constraint fk_1 foreign key(id)
+references dell(id));
+
+...................................... describe table................................
+
+describe dell;
+select student_info.name from student_info where balance=(select max(balance) from student_info)

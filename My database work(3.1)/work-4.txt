@@ -1,0 +1,46 @@
+   
+...............aggregate function and group by clause..............
+
+CREATE TABLE product 
+  (product_name VARCHAR2(25),
+   product_price NUMBER(4,2),
+   quantity_on_hand NUMBER(5,0),
+  last_stock_date DATE);
+
+
+
+
+INSERT INTO product VALUES ('Small Widget', 99, 1, '15-JAN-03');
+INSERT INTO product VALUES ('Medium Widget', 75, 1000, '15-JAN-02');
+INSERT INTO product VALUES ('Product Number', 50, 100, '15-JAN-03');
+
+
+
+
+SELECT SUBSTR(product_name, 1, 15) "Product",
+ SUM(quantity_on_hand) "Total Sold",
+ AVG(quantity_on_hand) "Average",
+ COUNT(quantity_on_hand) "Transactions",
+ MIN(quantity_on_hand) "Fewest",
+ MAX(quantity_on_hand) "Most"
+ FROM product
+ GROUP BY product_name;
+
+Product         Total Sold    Average Transactions     Fewest       Most
+--------------- ---------- ---------- ------------ ---------- ----------
+Product Number         100        100            1        100        100
+Small Widget             1          1            1          1          1
+Medium Widget         1000       1000            1       1000       1000
+
+
+Get current user name:
+ 
+SQL> select user from dual;
+
+USER
+------------------------------
+system
+
+SQL>
+
+

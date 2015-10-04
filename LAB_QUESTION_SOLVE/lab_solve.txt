@@ -1,0 +1,181 @@
+//FOR ODD//
+ create table dept_issue
+ (dept_name char(12),
+ balance  number(12),
+ trans_id number(13)
+ );
+
+insert into  dept_issue values('CSE',5000,121);
+insert into  dept_issue values('TE',2000,222);
+insert into  dept_issue values('CSE',4000,333);
+insert into  dept_issue values('ICT',1000,444);
+insert into  dept_issue values('TE',6000,565);
+insert into  dept_issue values('ICT',4000,743);
+
+create table dept
+ (dept_id varchar(12),
+ dept_name  char(12)
+ );
+
+insert into  dept values('1001','CSE');
+insert into  dept values('1002','ICT');
+insert into  dept values('1003','BGE');
+insert into  dept values('1004','TE');
+insert into  dept values('1005','CSE');
+insert into  dept values('1006','TE');
+insert into  dept values('1007','ESRM');
+
+
+create table dept_balance
+ (dept_id varchar(12),
+ balance  number(12) 
+ );
+
+
+insert into  dept_balance values('1001',50000);
+insert into  dept_balance values('1002',7000);
+insert into  dept_balance values('1003',10000);
+insert into  dept_balance values('1004',15000);
+insert into  dept_balance values('1005',20000);
+insert into  dept_balance values('1006',3000);
+insert into  dept_balance values('1007',5000);
+
+create table student
+ (id varchar(12),
+name char(10),
+Gender char(10),
+mark number(10),
+dept_id varchar(12)
+ );
+
+insert into student values('CE-101','Rasel','M',70,'1001');
+insert into student values('TE-102','Fysal','M',65,'1004');
+insert into student values('CE-103','Faruk','M',80,'1001');
+insert into student values('BG-104','Sohel','M',75,'1003');
+insert into student values('ICT-105','Asif','M',85,'1002');
+insert into student values('CE-106','Ratul','M',90,'1001');
+
+
+
+select * from  dept_issue;
+select * from  dept;
+select * from dept_balance;
+select * from student;
+
+(1).select distinct dept_name from dept; 
+
+(2).select dept_name,count(*) from dept group by dept_name;
+
+(3).select max(balance) from dept_balance where balance < (select max(balance) from dept_balance);
+
+(4)update dept_balance set balance=(case
+when balance between 10000 and 20000
+then balance+balance * 0.4 
+when balance between 6000 and 10000
+then balance+balance*0.3
+when balance between 5000 and 1000
+then balance+balance*0.2
+else balance+balance*0.05
+end);
+
+(5).select  name   from  student where  name like '%Ra%' or name like '%Fa%';
+
+(6).select dept_name,avg(balance) from dept_issue group by dept_name having avg(balance)>3000;
+
+
+//FOR EVEN//
+
+create table stu_info1
+( stu_id varchar(12),
+  stu_name char(12)
+);
+
+insert into stu_info1 values('CE-10002','Rasel');
+insert into stu_info1 values('CE-11003','Faruk');
+insert into stu_info1 values('CE-12004','Sohel');
+insert into stu_info1 values('CE-09005','Arif');
+insert into stu_info1 values('CE-06002','Tushar');
+
+create table stu_info2
+( stu_id  varchar(12), 
+  stu_name  char(12),
+stu_balance  number(12)
+);
+insert into stu_info2 values('CE-10002','Rasel',5000);
+insert into stu_info2 values('CE-12004','Sohel',6000);
+insert into stu_info2 values('CE-11003','Faruk',7000);
+insert into stu_info2 values('CE-09005','Arif',8000);
+insert into stu_info2 values('CE-06002','Tushar',9000);
+
+
+create table Emplyee
+( Emp_id varchar(12),
+  Destination char(12),
+  Trains_id number(12)
+);
+
+insert into Emplyee values('emp-101','SE',10);
+insert into Emplyee values('emp-102','SA',20);
+insert into Emplyee values('emp-103','Semenar',30);
+insert into Emplyee values('emp-104','Manager',40);
+insert into Emplyee values('emp-105','SE',50);
+insert into Emplyee values('emp-106','Manager',60);
+
+
+
+create table  Emplyee_details
+( 
+Emp_id varchar(12),
+Emp_name char(12),
+ Balance number(12)
+);
+
+insert into Emplyee_details values('emp-101','Sohel',5000);
+insert into Emplyee_details values('emp-102','Arif',7000);
+insert into Emplyee_details values('emp-103','Tushar',8000);
+insert into Emplyee_details values('emp-104','Faysal',9000);
+insert into Emplyee_details values('emp-105','Arif',10000);
+insert into Emplyee_details values('emp-106','Rubel',5000);
+
+create table address
+(
+Emp_id varchar(12),
+mob_no number(15),
+district  char(10)
+);
+
+insert into address values('emp-101',017222,'DHK');
+insert into address values('emp-102',019333,'CTG');
+insert into address values('emp-103',018444,'KHU');
+insert into address values('emp-104',015555,'BAR');
+insert into address values('emp-105',016666,'RAJ');
+insert into address values('emp-106',015555,'RAJ');
+
+select * from stu_info1;
+select * from stu_info2;
+select * from Emplyee ;
+select * from Emplyee_details ;
+select * from address;
+
+
+(1)select stu_name,(case when substr(stu_id,4,2)=10 then ' 4rt year' when substr(stu_id,4,2)=12 then ' 2rt year' when substr(stu_id,4,2)=11 then ' 3rt year' when substr(stu_id,4,2)=09 then ' 4rt year 2nd semester' when substr(stu_id,4,2)=06  then ' 4rt year 2nd semester' end) as yrar  from stu_info1;
+
+(4)select Emplyee.Destination,count(Emplyee.Destination),address.mob_no  from Emplyee left join address on Emplyee.Emp_id=address.Emp_id group by Emplyee.Destination,address.mob_no;
+
+(6)select Emplyee_details.Emp_id,Emplyee_details.Emp_name,Emplyee_details.Balance,address.mob_no,address.district from Emplyee_details,address where Emplyee_details.Emp_id=address.Emp_id and Emplyee_details.balance between 7000 and 10000;
+ 
+
+
+
+update address set mob_no='017222' where address.Emp_id='emp-105';
+
+select (case when substr(stu_id,4,2)=10 then ' 4rt year' when substr(stu_id,4,2)=12 then ' 2rt year' when substr(stu_id,4,2)=11 then ' 3rt year' when substr(stu_id,4,2)=09 then ' 4rt year 2nd semester' when substr(stu_id,4,2)=06  then ' 4rt year' end) as year  from stu_info1 union select count(*) year  from stu_info1;
+
+select  Emp_id,district from Emplyee_details a natural  join address b on a.Emp_id=b.Emp_id;
+
+select  *  from Emplyee_details a inner join Emplyee b on a.Emp_id=b.Emp_id where update Emplyee_details set balance=Emplyee.Destination='SE' then balance+balance * 0.1 end);
+
+
+ update Emplyee_details set balance=Emplyee.Destination='SE' then balance+balance * 0.1 end);
+
+

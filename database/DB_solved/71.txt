@@ -1,0 +1,107 @@
+Create Table patient
+(patient_code varchar(15),
+patient_name varchar(15),
+P_age        int,
+Contact_no int,
+Admission_date DATE,
+Relase_date DATE,
+Constraint P_pk primary key(patient_code) 
+);
+
+insert into patient values('p101','jahid',20,333,'12-JAN-2012','30-March-2012');
+
+insert into patient values('p102','akash',23,444,'15-JAN-2011','10-FEB-2011');
+
+insert into patient values('p103','hasib',25,555,'12-FEB-2010','20-March-2010');
+........................................Table Bed......................
+Create Table Bed
+(Bed_no varchar(15),
+description varchar(14),
+Constraint pkb primary key(bed_no)
+);
+
+
+insert into bed values('b301','Good');
+
+
+insert into bed values('b302','Smart');
+
+
+insert into bed values('b303','Handsome');
+
+........................................Table Room......................
+Create Table Room
+(Room_no varchar(15),
+Room_cost number(9),
+Floor_id varchar(15),
+Constraint r_pk primary key(room_no)
+);
+
+insert into room values('R201',1000,'f101');
+
+insert into room values('R202',2000,'f102');
+
+insert into room values('R204',17000,'f103');
+
+insert into room values('R207',3000,'f102');
+
+insert into room values('R203',3000,'f103');
+........................................Table Room_Bed......................
+Create Table Room_bed
+(Room_no varchar(15),
+Bed_no varchar(15),
+Constraint rbk foreign key(Room_no)
+references Room(room_no),
+Constraint bpk foreign key(bed_no)
+references Bed(bed_no)
+);
+insert into Room_bed values('R201','b301');
+
+insert into Room_bed values('R202','b302');
+insert into Room_bed values('R203','b303');
+........................................Patient_Bed......................
+
+Create Table patient_bed
+(Patient_code varchar(15),
+Bed_no varchar(15),
+Constraint pdk foreign key(patient_code)
+references patient(patient_code),
+Constraint bg_pk foreign key(bed_no)
+references bed(bed_no)
+);
+
+insert into PATIENT_bed values('p101','b301');
+
+insert into patient_bed values('p102','b302');
+insert into patient_bed values('p103','b303');
+
+
+
+............................solution of query no:01..............................
+
+select  distinct patient_name,p_age from patient 
+inner join patient_bed ON patient.patient_code=patient_bed.patient_code
+inner join Room_bed ON patient_bed.bed_no=Room_bed.bed_no
+inner join Room ON Room_bed.room_no=Room.room_no
+where Room.room_no='R201';
+
+PATIENT_NAME         P_AGE
+--------------- ----------
+jahid                   20
+
+
+...............................solution of query no:02...............................
+select count(distinct (patient_id))from patient
+inner join patient_bed ON patient_bed.patient_code=patient.patient_code
+inner join Room_bed ON patient_bed.bed_no=Room_bed.bed_no
+inner join Room ON Room_bed.room_no=Room.room_no
+where patient.p_age>20;
+
+COUNT(PATIENT.PATIENT_CODE)
+---------------------------
+                          2
+...........................................solution of query no:03.......................
+update room SET room_cost=room_cost*1.8 where
+ patient_code IN(select count(patient.patient_code) from patient 
+inner join patient_bed ON patient.patient_code=patient_bed.patient_code
+inner join room_bed ON patient_bed.bed_no=room_bed.bed_no where patient.patient_code>2);

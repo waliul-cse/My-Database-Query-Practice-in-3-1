@@ -1,0 +1,21 @@
+create table stu_acc
+(roll number(5) not null,
+balance number(6),
+constraint pk13 primary key(roll));
+
+ Queries:
+
+declare i number:=0;
+  j number:=0;
+ begin
+ loop
+ insert into stu_acc values(i,j);
+ i:=i+1;
+ j:=j+100;
+ exit when i>10 and j>1000;
+ end loop;
+end;
+.
+
+
+Task:Find roll number of the student of Even number(1 to 50)

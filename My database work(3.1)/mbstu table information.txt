@@ -1,0 +1,359 @@
+
+..................................................Create Table.........
+      
+  Create Table mbstu
+     (ID   varchar(20),
+      Name   varchar(20),
+      Dept   varchar(20),
+      CGPA    float,
+      ACC_No  number(7,2),
+      Balance    number(8,2),
+      Salary     number(20),
+      City       varchar(20));
+
+
+
+
+
+                         ..............INSERT TABLE....................
+
+insert into mbstu values('CE1109','Asif','CSE',3.50,101.09,2000,70000,'Naogaon');
+insert into mbstu values('CE1102','Habib','ICT',3.40,101.02,3000,50000,'BBA');
+insert into mbstu values('CE1103','Masud','TE',3.20,101.03,7000,90000,'Khulna');
+insert into mbstu values('CE1104','Asad','CSE',3.70,101.04,6000,30000,'Commilla');
+insert into mbstu values('CE1105','Rasel','CSE',3.60,101.05,8000,20000,'Shylet');
+insert into mbstu values('CE1106','Jony','TE',3.10,101.06,3000,40000,'Rangpur');
+insert into mbstu values('CE1107','Sumi','BBA',3.00,101.07,9000,10000,'Naogaon');
+insert into mbstu values('CE1108','Aki','CPS',3.90,101.08,4000,20000,'Rajshahi');
+insert into mbstu values('CE1110','Asif','CSE',3.50,101.09,2000,70000,'Natore');
+
+
+
+
+
+
+                                        ......USE OF LIKE....
+
+1.select name from mbstu where name like '%a%';
+ 
+This command represent in the name if the have any 'a'letter then it will be selected;
+
+2.select name from mbstu where name like '_a%';
+
+This command represent in after space one if there have 'a' leter this name will be selected;
+.
+3.select name from mbstu where name like 'M%';
+This command represent in the name which name start with 'M'lettetr it will be selected; 
+4. select name from mbstu where name like 'M%';
+5.select name from mbstu where name like '%F';
+
+
+                                  USE OF  WHERE
+
+>>>>supose we want to know  whose cgpa is avobe 3.20.
+
+
+1.select cgpa from mbstu where mbstu.cgpa>3.20;
+
+it results:
+ CGPA
+-----
+  3.3
+  3.4
+  3.7
+  3.6
+  3.9
+
+           
+
+
+
+
+2.Now we want to know name,dept,cgpa whose cgpa avobe>3.20;
+
+
+
+>>  select name,dept,cgpa from mbstu where mbstu.cgpa>3.20;
+
+
+
+NAME                 DEPT                       CGPA
+-------------------- -------------------- ----------
+Noname               CSE                         3.3
+Habib                ICT                         3.4
+Asad                 CSE                         3.7
+Rasel                CSE                         3.6
+Aki                  CPS                         3.9
+
+
+               ...............USE OF BETWEEN...............
+
+supose we want to know salary of mbstu table whose salary is 20,000-30,000
+
+>>select salary from mbstu where salary between 20000 and 30000;
+
+ SALARY
+-------
+  30000
+  30000
+  20000
+  20000
+
+we also see name ,dept and other column also..........
+
+>> SELECT name ,dept ,salary from mbstu where mbstu.salary between 20000 and 30000;
+
+Output:
+
+NAME                 DEPT                     SALARY
+-------------------- -------------------- ----------
+Noname               CSE                       30000
+Asad                 CSE                       30000
+Rasel                CSE                       20000
+Aki                  CPS                       20000
+
+ .............  use of Like.........
+
+
+>>select city from mbstu where city like 'Dh%';
+
+CITY
+--------
+Dhaka
+
+>> select city from mbstu where city like '%a';
+
+Output:
+CITY
+--------------------
+Dhaka
+Khulna
+Commilla
+
+>>select name from mbstu where name like '__n%';
+
+Output:
+
+NAME
+-----------
+Noname
+Jony
+
+>>select dept from mbstu where dept like 'C%';
+ output:
+
+DEPT
+--------------------
+CSE
+CSE
+CSE
+CPS
+
+      ......................USE .OF.."AND-OR".........................
+
+**The AND & OR operators are used to filter records based on more than one condition...
+>>The AND & OR Operators
+
+..The AND operator displays a record if both the first condition and the second condition is true.
+
+...The OR operator displays a record if either the first condition or the second condition is true.
+
+>>>select * from mbstu where name='Aki' and dept='CPS';
+
+>>select name ,dept ,salary from mbstu where name='Aki' and dept='CPS';
+
+NAME                 DEPT                     SALARY
+-------------------- -------------------- ----------
+Aki                  CPS                       20000
+>>OR........
+>>select name ,dept,salary from mbstu where name='Aki' OR dept='BBA';
+
+OUTPUT:
+
+NAME                 DEPT                     SALAR
+-------------------- -------------------- ---------
+Sumi                 BBA                       1000
+Aki                  CPS                       2000
+
+
+>>select name from mbstu where city='Naogaon' AND ( Dept='BBA' OR CGPA=3.40);
+NAME
+--------------------
+Sumi
+
+
+.....................SQL ORDER BY Syntax..............
+
+     ***
+     SELECT column_name(s)
+     FROM table_name
+     ORDER BY column_name(s) ASC|DESC
+
+
+>>select salary from mbstu order by salary ;
+
+
+ SALARY
+-------
+  10000
+  20000
+  20000
+  30000
+  30000
+  40000
+  50000
+  90000
+
+>>>select salary from mbstu order by salary desc;
+ SALARY
+-------
+  90000
+  50000
+  40000
+  30000
+  30000
+  20000
+  20000
+  10000
+
+SQL> select name from mbstu order by  name;
+
+NAME
+--------------------
+Aki
+Asad
+Habib
+Jony
+Masud
+Noname
+Rasel
+Sumi
+
+....................SQL UPDATE Syntax.................
+
+  *** UPDATE table_name
+   SET column1=value, column2=value2,...
+   WHERE some_column=some_value
+
+Note:
+ Notice the WHERE clause in the UPDATE syntax. The WHERE clause specifies which record or records that should be updated. If you omit the WHERE clause, all records will be updated!.
+
+
+
+>>update mbstu set name='Hasn' ,city='Dhaka';
+
+SQL> Select name from mbstu;
+
+NAME
+--------------------
+Hasn
+Hasn
+Hasn
+Hasn
+Hasn
+Hasn
+Hasn
+Hasn
+
+
+
+
+
+SQL>  update mbstu set name='Nishu',city='Tangail' where id='CE1106';
+
+SQL> update mbstu set City='DHAKA';
+
+IF we do not use where clause then all records will be updated of this column.........
+
+8 rows updated.
+
+SQL> select name ,city from mbstu;
+
+NAME                 CITY
+-------------------- ----------------
+Noname               DHAKA
+Habib                DHAKA
+Masud                DHAKA
+Asad                 DHAKA
+Rasel                DHAKA
+Nishu                DHAKA
+Sumi                 DHAKA
+Aki                  DHAKA
+
+
+>update mbstu set name='Abir' ,City='Dhaka' where id='CE1101';
+>update mbstu set name='Waliul' ,city='Naogaon' where id='CE1102';
+>>update mbstu set name='Rima' ,city='Naogaon' where id='CE1103';
+>>update mbstu set name='Amin' ,city='Khulna' where id='CE1104';
+>>update mbstu set name='Milon' ,city='Shylet' where id='CE1105';
+>>update mbstu set name='Shakib' ,city='barisal' where id='CE1106';
+>>update mbstu set name='masud' ,city='Naogaon' where id='CE1107';
+>>update mbstu set name='Apurbo' ,city='Dhaka' where id='CE1108';
+
+
+
+               .............USE OF GROUP BY...........
+
+
+>>select dept,avg(salary) from mbstu group by dept;
+DEPT                 AVG(SALARY)
+-------------------- -----------
+TE                         65000
+CPS                        20000
+CSE                        47500
+CE                         30000
+ICT                        50000
+BBA                        10000
+
+>>select name,max(salary) from mbstu group by name;
+>>select name,count(*) from mbstu group by name;
+NAME                   COUNT(*)
+-------------------- ----------
+Noname                        1
+Masud                         1
+Rasel                         1
+Aki                           1
+Sumi                          1
+Asif                          2
+Habib                         1
+Asad                          1
+Jony                          1
+
+
+>>select dept,min(salary) from mbstu group by dept;
+
+
+
+
+
+
+
+
+>>select dept ,max(salary) from mbstu where salary>30000 group by dept;
+output:
+DEPT                 MAX(SALARY)
+-------------------- -----------
+TE                         90000
+CSE                        70000
+ICT                        50000
+
+>>select dept,avg(salary) from mbstu group by dept;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

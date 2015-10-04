@@ -1,0 +1,12 @@
+CREATE TABLE myTable 
+(Name VARCHAR(50),
+ PhoneNo VARCHAR(15));
+
+CREATE TABLE myTableAudit
+ (id INT PRIMARY KEY NOT NULL,
+ Operation VARCHAR(10),
+ RecordedOn DATE DEFAULT SysDate,
+ OldName VARCHAR(50),
+ NewName VARCHAR(50),
+ OldPhone VARCHAR(15),
+ NewPhone VARCHAR(15));

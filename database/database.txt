@@ -1,0 +1,169 @@
+ ______________________________user create____________________________
+create user system1 identified by idea;
+grant dba,connect,resource to system1;
+_____________________________________UPDATE_________________________________
+update student_info set student_info.id='11012' where student_info.id='123';
+ 
+________________________DELETE_______________________
+delete from student_info where student_info.id='234';
+
+_______CREATE_TABLE_______
+create table student_info
+( id char (7)
+, name char(7)
+,dept char(5)
+,balance number(9,0)
+);
+
+ insert into student_info values('CE11012','noman','cse',1000);
+insert into student_info values('IT11001','monjur','IT',3000);
+ insert into student_info values('ES11032','nayem','cse',4000);
+insert into student_info values('ES11001','monjui','IT',5000);
+ insert into student_info values('CE11012','nobir','cse',6000);
+insert into student_info values('IT11001','nahid','IT',4000);
+
+__________________________AGGREATE_FUNCTION__________________________
+select dept,sum(balance) std_balance from student_info group by dept;
+
+___________________LIKE_________________________
+select * from student_info where id LIKE '%CE%';
+
+create table student
+( id char(7)
+,dist char(14)
+);
+
+insert into student values('CE11012','sirajgong');
+insert into student values('CE11020','gazipur');
+
+*inner join*
+
+select * from student_info inner join student on student_info.id=student.id;
+
+*left join*
+select * from student_info left join student on student_info.id=student.id;
+
+*right join*sese
+select * from student_info right join student on student_info.id=student.id;
+
+*left outer join*
+select * from student_info left outer join student on student_info.id=student.id;
+select * from student_info left outer join student on student_info.id=student.id where student.id is null;
+
+*right outer join*
+select * from student_info right outer join student on student_info.id=student.id;
+select * from student_info right outer join student on student_info.id=student.id where student_info.id is null;
+
+*full outer join*
+select * from student_info full outer join student on student_info.id=student.id where student.id is null;
+select * from student_info full outer join student on student_info.id=student.id;
+
+*in*
+select * from student_info where student_info.id in('CE11012','CE11001');
+
+*between*
+select * from student_info where student_info.balance between 2000 and 5000;
+
+*order by*
+select * from student_info order by student_info.name;
+
+*group by*
+select dept,sum(balance) from student_info group by student_info.dept;
+
+*having*
+select dept,sum(balance) from student_info group by student_info.dept having sum(balance)>11000;
+select dept,sum(balance) from student_info group by student_info.dept having sum(balance)>10999 and sum(balance)<11001;
+
+*case*
+select (case when balance>30000
+then 'thirty'
+when balance>20000
+then 'fokir'
+else 'badsha'
+end) as taka from student_info;
+
+
+*update and having*
+update student_info set student_info.balance =(case when balance<3000 and balance>1099 
+then 3000
+when balance>3001 and balance<5000
+then 5000
+end);
+
+create table test
+(
+id char(7) not null,
+name char(10),
+dept char(7),
+constraint pk_2 primary key(id)
+);
+
+
+craete table test_2
+(
+id char(7) not null,
+name char(10), 
+dept char(7), 
+constraint pk_3 primary key(id),
+constraint fk_1 foreign key(id)
+references test(id)
+);
+
+_____________________________________________________________
+create table stu_info
+(
+id char(10), name char(10), dept char(7), balance float
+);
+
+insert into stu_info values('ce08011','Abir','cse',5000);
+insert into stu_info values('IT09011','Shohel','ICT',5000);
+insert into stu_info values('TEX10011','rasel','TEX',5000);
+insert into stu_info values('BGE11011','Tushar','BGE',5000);
+insert into stu_info values('ES05011','Faysal','ESRM',5000);
+
+
+* join three or more table*
+create table student1
+( id char (7)
+, name char(9)
+,dept char(5)
+,semester char(6)
+,constraints pk_9 primary key(id)
+);
+
+insert into student1 values('CE11012','NOMAN','CSE','3-1');
+insert into student1 values('CE12012','SAKIL','CSE','2-1');
+insert into student1 values('CE10012','ROKIB','CSE','4-1);
+insert into student1 values('CE09012','MUNNA','CSE','5-1');
+insert into student1 values('CE08012','JAKARIA','CSE','6-1');
+
+create table student2
+( id char (7)
+, dist char(9)
+,cgpa char(5)
+,constraint pk_10 primary key(id),
+constraint fk_11 foreign key(id)
+references student1(id)
+);
+
+
+create table student3
+( dist char (9)
+, blood_group char(5)
+);
+
+insert into student3 values('SIRAJGONJ','B+');
+insert into student3 values('RAJSHAHI','A+');
+
+
+select a.id,a.name,a.dept,a.semester,b.dist,b.cgpa,c.blood_group from student1 a,student2 b,student3 c where a.id=b.id and b.dist=c.dist;
+
+//////////////find second highest value///////////////////////
+select balance from
+(select student_info.balance,rownum rn from
+(select distinct balance from student_info order by balance desc)
+student_info where rownum<=2)
+where rn>=2;
+
+select max(student_info.balance) as balance from student_info where student_info.balance not in(select max(student_info.balance) from student_info);
+

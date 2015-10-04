@@ -1,0 +1,37 @@
+CREATE TABLE student_add(
+    id INTEGER,
+    name CHAR(10)
+);
+
+---------------------Procedure for inserting tupple in table------------------------------------
+CREATE PROCEDURE insert_sp(i IN NUMBER,j in char) AS
+BEGIN
+    INSERT INTO student_add VALUES(i,j);
+END insert_sp;
+.
+run;
+BEGIN insert_sp(101,'faysal');
+END;
+.
+run;
+
+-------------------------Procedure for deleting tupple in table------------------------------
+create or replace procedure delete_sp(i in number,j in number) as 
+begin 
+delete from student_add where student_add.id=i and student_add.name=j;
+end delete_sp;
+
+
+ Create or replace procedure test
+ (
+  id IN number
+ )
+ 
+ as 
+ 
+ begin
+ open
+ select * from student_add;
+ 
+ end;
+ /

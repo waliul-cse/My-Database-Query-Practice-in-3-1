@@ -1,0 +1,152 @@
+_______________________________________________Main Table__________________________________________
+Create table bad_boy
+(id varchar(15),
+Name varchar(15),
+dept varchar(15),
+Balance number(8,3),
+City  varchar(15));
+
+
+ insert into bad_boy values('ce101','waliul','cse',3000,'RAJ');
+ insert into bad_boy values('ce102','Rubel','ICT',4000,'Rangpur');
+
+_________________________________________-Audit Table______________________________________________
+create table badboy_audit 
+(
+ id varchar(10),
+ balance Number(8,3),
+ delete_date Date,
+ deleted_by VARCHAR2(15));
+
+____________________________________________Trigger ON after delete __________________________________________________
+CREATE OR REPLACE TRIGGER badboy_after_delete
+ AFTER DELETE
+ ON bad_boy
+FOR EACH ROW
+ DECLARE
+ v_username varchar2(10);
+ BEGIN
+ SELECT user INTO v_username
+ FROM dual;
+ INSERT INTO badboy_audit (id, balance, delete_date, deleted_by)
+ VALUES ( :old.id, :old.balance, sysdate, v_username);
+end;
+/
+
+Trigger created.
+
+_______________________----supose anyone(user) delete something ______________________________________
+SQL> delete from bad_boy;
+
+______________________________now DBA check his private Table____________________________________-
+
+SQL> select*from badboy_audit;
+ID            BALANCE DELETE_DA DELETED_BY
+---------- ---------- --------- --------------
+ce101            3000 02-JUN-13 SYSTEM
+ce102            4000 02-JUN-13 SYSTEM
+
+
+
+____________________________________________Trigger for before_delete________________________________
+CREATE OR REPLACE TRIGGER badboy_before_delete
+ BEFORE DELETE
+ ON bad_boy
+ FOR EACH ROW
+ DECLARE
+ v_username varchar(10);
+ BEGIN
+ SELECT user INTO v_username
+ FROM dual;
+ INSERT INTO badboy_audit (id, balance, delete_date,deleted_by )
+ VALUES (:old.id,:old.balance, sysdate, v_username );
+end;
+/
+___________________inser into main Table_________________________________________-
+
+insert into bad_boy values('ce103','MUnna','BBA',5000,'DHAKA');
+insert into bad_boy values('ce104','Shafi','CSE',4000,'Naogaon');
+
+>>delete from bad_boy
+
+______________________________now DBA check his private Table____________________________________-
+
+>>select*from badboy_audit;
+ID            BALANCE DELETE_DA DELETED_BY
+---------- ---------- --------- ---------------
+ce104            4000 02-JUN-13 SYSTEM
+ce103            5000 02-JUN-13 SYSTEM
+
+
+
+
+-----__________________________________________ Simply Trigger Create_________________________________________________
+  Create or replace trigger advance_info 
+    before insert or update or delete on advanced
+    begin
+    null;
+   end;
+   /
+
+
+Trigger Created
+
+_________________________________________________________For System Trigger Basic Table__________________________________
+Create Table advanced
+ (Id  varchar(15),
+ Name varchar(20),
+ Dept  varchar(15),
+ Cgpa  float,
+ Birth_date date,
+ Mob_no  int,
+ Dist varchar(20),
+ Salary  number(8));
+
+
+_______________________insert_________________________________________________
+insert into advanced values('CE101','Hasan','CSE',3.42,'12-JAN-2012',822,'DHA',30000);
+insert into advanced values('CE102','Habib','ICT',3.82,'14-JAN-2012',522,'CTG',40000);
+
+insert into advanced values('CE103','Abir','BGE',3.32,'13-JAN-2013',522,'BAR',30000);
+
+insert into advanced values('CE104','mila','BBA',3.48,'12-JAN-2012',342,'KHUL',70000);
+
+
+____________________________________________________Copy the advanced Table_________________________________________________________-
+Create table advanced_copy as select  from advanced;
+
+_____________________________________________________--My trigger table_____________________________-------------
+create table my_log(
+     who varchar2(30),
+     when date );
+________________________________________________________---Trigger create__________________________________________-
+Create or Replace trigger advance_info
+before insert or update or delete on advanced_copy
+begin
+insert into my_log(who,when)values(user,sysdate);
+end;
+/
+
+____________________________________update the existing trigger_______________________________________________
+update advanced_copy set salary = salary  1.1;
+
+
+____________----select to check trigger_______________________________________________________________________
+
+SQL select*from my_log;
+
+WHO                            WHEN
+------------------------------ ---------
+SYSTEM                         10-MAY-13
+
+
+_________________________delete command________________________________________________________________________
+SQL delete *from advanced_copy;
+
+
+SQL select *from my_log;
+
+WHO                            WHEN
+------------------------------ ---------
+SYSTEM                         10-MAY-13
+SYSTEM                         10-MAY-13

@@ -1,0 +1,8 @@
+insert into info1 values('1001','waliul','CSE',4000,'Naogaon',30000,'Soft. Engineer');
+insert into info1 values('1002','Rownok','Phy',200.0,'Naogaon',40000,'Banker');
+insert into info1 values('1003','Biddut','ICT',3000,'Rajshahi',50000,'Soft. Engineer');
+insert into info1 values('1004','Abir','BBA',3000.2,'DHAKA',20000,'Journalist');
+insert into info1 values('1005','Ashik','EEE',1000,'Commilla',90000,'Soft. Engineer');
+insert into info1 values('1006','Habib','TE',400,'Kulna',2400,'textile enginner');
+insert into info1 values('1007','Ripon','Civil',50000,'Coxbazar',9000,' Engineer');
+insert into info1 values('1008','Hasan','CSE',6000,'Bogra',70000,'Soft. Engineer');

@@ -1,0 +1,195 @@
+
+ Create Table advanced
+ (Id  varchar(15),
+ Name varchar(20),
+ Dept  varchar(15),
+ Cgpa  float,
+ Birth_date date,
+ Mob_no  int,
+ Dist varchar(20),
+ Salary  number(8));
+
+_______________________insert_________________________________________________
+insert into advanced values('CE101','Hasan','CSE',3.42,'12-JAN-2012',822,'DHA',30000);
+insert into advanced values('CE102','Habib','ICT',3.82,'14-JAN-2012',522,'CTG',40000);
+
+insert into advanced values('CE103','Abir','BGE',3.32,'13-JAN-2013',522,'BAR',30000);
+
+insert into advanced values('CE104','mila','BBA',3.48,'12-JAN-2012',342,'KHUL',70000);
+
+insert into advanced values('CE106','Nipa','BBA',3.60,'12-JAN-2010',332,'Tangail',80000);
+
+insert into advanced values('CE107','Nishan','EEE',3.62,'12-JAN-2009',222,'Naogaon',10000);
+
+insert into advanced values('CE108','Abul','IT',3.90,'12-JAN-2006',0155323132,'CTG',90000);
+
+_______________________________View Creation________________________________________-_________-
+
+Syntax:
+          CREATE or replace view "VIEW_NAME" AS "SQL Statement"
+
+Note:"SQL Statement" can be any of the SQL statements
+
+
+Create View advanced_data as
+(
+select name,dept,dist,salary from advanced
+);
+ Note:IN simple query  bracket is optional but in complex query it is needed.
+
+
+SQL> select*from advanced_data;
+
+NAME                 DEPT            DIST                     SALARY
+-------------------- --------------- -------------------- ----------
+Hasan                CSE             DHA                       30000
+Habib                ICT             CTG                       40000
+Abir                 BGE             BAR                       30000
+mila                 BBA             KHUL                      70000
+Nipa                 BBA             Tangail                   80000
+Nishan               EEE             Naogaon                   10000
+Abul                 IT              CTG                       90000
+
+
+__________________________________________insert into view____________________________________________--
+
+insert into advanced_data values('CE1020','ECE','NAO',30000);
+
+________________________________-view with aggregate function_____________________________________________
+Create view advanced_b
+as select name,avg(salary) as "AVERAGE SALARY" from advanced group by name;
+
+Create or replace adv 
+select name,avg(salary) as average salary from advanced group by name having(salary)>30000;
+
+
+
+ 
+ Create or replace view ap_info 
+ as select advanced.id,personal.f_name,advanced.name,advanced.salary,advanced.id from advanc
+ed inner join personal on advanced.id=personal.id;
+
+
+
+
+
+__________________________________________________view create with joining___________________________
+   Create Table personal
+   (ID  varchar(15),
+   F_name varchar(15),
+   Name  varchar(14),
+   Balance number(8));
+ insert into personal values('CE101','Abdur Rahim','Hasan',20000);
+ insert into personal values('CE102','Abdur Halim','Habib',40000);
+ insert into personal values('CE105','Abu Rahim','Abir',60000);
+ insert into personal values('CE104','Abu bakkar','Mila',70000);
+
+
+ 
+SQL>   Create or replace view  ap as  select advanced.id,advanced.name,advanced.dept,advanced.salary,personal.balance
+ from advanced 
+inner join personal on advanced.id=personal.id;
+
+View created.
+
+SQL> select*from ap;
+
+ID              NAME                 DEPT                SALARY    BALANCE
+--------------- -------------------- --------------- ---------- ----------
+CE101           Hasan                CSE                  30000      20000
+CE102           Habib                ICT                  40000      40000
+CE104           mila                 BBA                  70000      70000
+ID              NAME                 DEPT                SALARY    BALANCE
+
+
+-----__________________________________________Trigger Create_________________________________________________
+  Create or replace trigger advance_info 
+    before insert or update or delete ON advanced
+    begin
+    null;
+   end;
+   /
+
+Trigger created.
+_______________________________---copy of the existing table________________________________________________--
+create table advanced_copy as select * from advanced;
+
+
+_____________________________________________________--My trigger table_____________________________----
+create table my_log(
+     who varchar2(30),
+     when date );
+
+________________________________________________________---Trigger create____________________-
+Create or Replace trigger advance_info
+before insert or update or delete on advanced_copy
+begin
+insert into my_log(who,when)values(user,sysdate);
+end;
+/
+
+____________________________________update the existing trigger__________________________--
+update advanced_copy set salary = salary * 1.1;
+
+
+____________----select to show trigger___________________
+
+SQL> select*from my_log;
+
+WHO                            WHEN
+------------------------------ ---------
+SYSTEM                         10-MAY-13
+
+
+_________________________delete command____________________________-
+SQL> delete from advanced_copy;
+
+7 rows deleted.
+
+SQL> select*from my_log;
+
+WHO                            WHEN
+------------------------------ ---------
+SYSTEM                         10-MAY-13
+SYSTEM                         10-MAY-13
+
+
+
+CREATE TABLE DEPT(
+       DEPTNO NUMBER(2),
+       DNAME VARCHAR2(14),
+       LOC VARCHAR2(13)
+   );
+
+
+__________________________________--Trigger create___________________-
+create or replace trigger deptbs before insert or update or delete
+       on dept
+       begin
+          dbms_output.put_line('before statement (dept)');
+       end;
+    /
+
+
+
+_____________________-procedure create_________________
+create or replace procedure my_proc as
+    begin
+      null;
+    end my_proc;
+    /
+
+Procedure created.
+
+_________________________________replace a procedure_______________________
+
+create or replace procedure my_proc as
+    begin
+      dbms_output.put_line ( 'Hello World' );
+    end my_proc;
+    /
+
+
+SQL>  EXEC my_proc();
+
+PL/SQL procedure successfully completed.

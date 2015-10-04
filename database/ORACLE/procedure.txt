@@ -1,0 +1,54 @@
+create table std
+(
+id number,
+name char
+);
+
+
+create or replace procedure insert_stdt
+(
+i in number,
+j in char
+)as
+BEGIN
+insert into std values(i,j);
+commit;
+END insert_stdt;
+/
+
+declare
+t number:=1;
+begin
+loop
+call insert_stdt(i,'Rasel');
+i:=i+1;
+exit when i>10;
+end;
+.
+run;
+
+
+
+create or replace procedure insert_std
+(
+i in varchar,
+j in varchar,
+k in varchar,
+l in varchar
+) as
+BEGIN
+insert into student values(i,j,k,l);
+commit;
+END insert_std;
+/
+END;
+BEGIN
+call insert_std(i,'Rasel','CSE','3rd');
+END;
+.
+run;
+
+call insert_std('CE09003','Rasel','CSE','3rd');
+
+drop procedure insert_std;
+select * from student;

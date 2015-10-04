@@ -1,0 +1,384 @@
+//TO SHOW THE COLUMNS OF A TABLE
+DESCRIBE TABS;
+//ED ID USED TO USE NOTEPAD
+
+//to show the tableS
+select * from tabs
+SELECT TABLE_NAME FROM TABS WHERE TABLE_NAME LIKE '%STUDENT%'
+SELECT TABLE_NAME FROM TABS WHERE TABLE_NAME LIKE '%INFO%'
+
+CREATE TABLE STUDENT 
+(
+	ST_ROLL VARCHAR2(10) NOT NULL,
+	ST_NAME VARCHAR2(30),
+	CONSTRAINT PK1 PRIMARY KEY(ST_ROLL)
+);
+
+CREATE TABLE DEPARTMENT
+(
+	DEPT_CODE VARCHAR2(5) NOT NULL,
+	DEPT_NAME VARCHAR2(20),
+	CONSTRAINT PK2 PRIMARY KEY(DEPT_CODE)
+);
+
+CREATE TABLE ST_DEPT
+(
+	ST_ROLL VARCHAR2(10) NOT NULL,
+	DEPT_CODE VARCHAR2(5) NOT NULL,
+	CONSTRAINT PK3 PRIMARY KEY(ST_ROLL),
+	CONSTRAINT FK1 FOREIGN KEY(ST_ROLL)  
+	REFERENCES STUDENT(ST_ROLL),
+	CONSTRAINT FK2 FOREIGN KEY(DEPT_CODE)  
+	REFERENCES DEPARTMENT(DEPT_CODE)
+);
+
+
+
+DELETE FROM T1;
+INSERT INTO T1 VALUES(1, 3);
+INSERT INTO T1 VALUES(2, 4);
+
+
+create table t1
+(
+  e number(5,3),
+  f number(5,3)
+);
+//pl1
+DECLARE
+    a NUMBER;
+    b NUMBER;
+BEGIN
+    SELECT e,f INTO a,b FROM T1 WHERE e>1;
+    INSERT INTO T1 VALUES(b,a);
+END;
+.
+run;
+
+
+
+
+
+//pl2
+DECLARE
+    a NUMBER;
+    b NUMBER;
+BEGIN
+    SELECT e,f INTO a,b FROM T1 WHERE e>1;
+    IF b=1 THEN
+        INSERT INTO T1 VALUES(b,a);
+    ELSE
+        INSERT INTO T1 VALUES(b+10,a+10);
+    END IF;
+END;
+.
+run;
+
+
+
+
+//pl3
+DECLARE
+    i NUMBER := 1;
+BEGIN
+    LOOP
+        INSERT INTO T1 VALUES(i,i);
+        i := i+1;
+        EXIT WHEN i>99;
+    END LOOP;
+END;
+.
+run;
+
+
+
+//pl4
+ DECLARE
+       /* Output variables to hold the result of the query: */
+      a T1.e%TYPE;
+      b T1.f%TYPE;
+        /* Cursor declaration: */
+      CURSOR T1Cursor IS
+          SELECT e, f
+          FROM T1
+          WHERE e < f;
+ BEGIN
+     OPEN T1Cursor;
+     LOOP
+            /* Retrieve each row of the result of the above query into PL/SQL variables: */
+         FETCH T1Cursor INTO a, b;
+            /* If there are no more rows to fetch, exit the loop: */
+         EXIT WHEN T1Cursor%NOTFOUND;
+            /* Insert the reverse tuple: */
+         INSERT INTO T1 VALUES(b, a);
+     END LOOP;
+        /* Free cursor used by the query. */
+     CLOSE T1Cursor;
+ END;
+ .
+ run;
+
+
+
+
+//pl5
+//Procedures
+CREATE TABLE T2 (
+    a INTEGER,
+    b CHAR(10)
+);
+
+
+CREATE PROCEDURE addtuple1(i IN NUMBER) AS
+	/* IN is a mode(read), OUT is mode(write), INOUT is mode (readwrite)*/
+BEGIN
+    INSERT INTO T2 VALUES(i, 'xxx');
+END addtuple1;
+.
+run;
+
+
+
+//to run the procedure
+BEGIN addtuple1(99); END;
+.
+run;
+
+create table student
+( id integer primary key,
+  name char(10)
+);
+
+
+create table dept
+( code char(4) primary key,
+  name char(50)
+);
+
+create table studept
+( stid integer,
+  deptcode char(4),
+  constraint pk primary key (stid,deptcode),   
+  constraint fk1 foreign key (stid) references student(id),
+  constraint fk2 foreign key (deptcode) references dept(code) 
+);
+
+insert into student values(8001,'a');
+insert into student values(8002,'b');
+insert into student values(8003,'c');
+insert into student values(8004,'d');
+insert into student values(8005,'e');
+insert into student values(7001,'f');
+insert into student values(7002,'g');
+insert into student values(7003,'h');
+insert into student values(7004,'i');
+insert into student values(7005,'j');
+
+
+insert into dept values('cse','computer science');
+insert into dept values('ict','information technology');
+
+insert into studept values(8001,'cse');
+insert into studept values(8002,'cse');
+insert into studept values(8003,'cse');
+insert into studept values(8004,'cse');
+insert into studept values(8005,'cse');
+insert into studept values(7001,'ict');
+insert into studept values(7002,'ict');
+insert into studept values(7003,'ict');
+insert into studept values(7004,'ict');
+insert into studept values(7005,'ict');
+
+//delete the student records
+CREATE PROCEDURE delst(dcode IN char) AS
+ 
+   tempid integer;
+  CURSOR StIdCursor IS
+    select id from student,studept where student.id= studept.stid and studept.deptcode=dcode;
+  BEGIN
+
+      OPEN StIdCursor;
+      LOOP
+          FETCH StIdCursor INTO tempid;
+          EXIT WHEN StIdCursor%NOTFOUND;
+   delete from studept where stid=tempid;
+          delete from student where id=tempid;
+      END LOOP;
+      CLOSE StIdCursor;
+  END delst;
+ .
+ run;
+
+//to run the procedure
+BEGIN delst('cse'); END;
+.
+run;
+
+
+CREATE or replace PROCEDURE TESTCURSOR
+IS
+    a NUMBER;
+    b NUMBER;
+    cursor c1 is  
+    SELECT e,f FROM T1 WHERE e>1;
+BEGIN
+    open c1;
+
+	LOOP
+          FETCH c1 INTO a,b;
+          EXIT WHEN c1%NOTFOUND;
+         INSERT INTO T1 VALUES(b,a);   
+      END LOOP;
+
+	    
+   close c1; 
+END;
+.
+run;
+
+
+
+
+///select multiple columns by cursor
+
+
+  1  CREATE or replace PROCEDURE TESTCURSOR
+  2  IS
+  3      a NUMBER;
+  4      b NUMBER;
+  5      cursor c1 is
+  6      SELECT e,f FROM T1 WHERE e>1;
+  7  BEGIN
+  8      open c1;
+  9
+ 10   LOOP
+ 11            FETCH c1 INTO a,b;
+ 12            EXIT WHEN c1%NOTFOUND;
+ 13           INSERT INTO T1 VALUES(b,a);
+ 14        END LOOP;
+ 15
+ 16
+ 17     close c1;
+ 18* END;
+
+Procedure created.
+
+SQL> select * from t1;
+
+         E          F
+---------- ----------
+         1          3
+         2          4
+
+SQL> BEGIN TESTCURSOR; End;
+  2  .
+SQL> run;
+  1* BEGIN TESTCURSOR; End;
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from t1;
+
+         E          F
+---------- ----------
+         1          3
+         2          4
+         4          2
+
+
+
+////***********trigger***
+
+CREATE [OR REPLACE] TRIGGER <trigger_name>
+
+    {BEFORE|AFTER} {INSERT|DELETE|UPDATE} ON <table_name>
+
+    [REFERENCING [NEW AS <new_row_name>] [OLD AS <old_row_name>]]
+
+    [FOR EACH ROW [WHEN (<trigger_condition>)]]
+
+    <trigger_body>
+
+//***enable /disable trigger
+alter table tablename enable all triggers;
+alter table tablename disable all triggers;
+
+
+//before statement level *** only one row will be inserted into dept though 5 rows inserted in student table
+
+CREATE or replace TRIGGER trg_BSL
+    BEFORE INSERT ON STUDENT
+BEGIN
+    insert into dept(code,name) values('aa','bb');
+END;
+
+
+INSERT INTO student(id,name) SELECT id + 10, 'name' FROM student WHERE id BETWEEN 8001 AND 8005;
+
+
+
+//after statementlevel *** only one row will be inserted into stauditlog though 5 rows inserted in student table
+
+CREATE TABLE stauditlog (
+    audit_date      DATE,
+    audit_desc      VARCHAR2(20)
+);
+
+CREATE OR REPLACE TRIGGER trg_ASL
+    AFTER INSERT OR UPDATE OR DELETE ON student
+DECLARE
+    v_action        VARCHAR2(20);
+BEGIN
+    IF INSERTING THEN
+        v_action := 'Added student(s)';
+    ELSIF UPDATING THEN
+        v_action := 'Updated student(s)';
+    ELSIF DELETING THEN
+        v_action := 'Deleted student(s)';
+    END IF;
+    INSERT INTO stauditlog VALUES (SYSDATE,v_action);
+END;
+
+
+INSERT INTO student(id,name) SELECT id + 10, 'name' FROM student WHERE id BETWEEN 8001 AND 8005;
+
+
+
+//before row-level: for each row, trgger will fire before row is inserted 
+//insert the following rows before run the trigger
+//INSERT INTO student(id) SELECT id + 20 FROM student WHERE id BETWEEN 8001 AND 8005;
+
+
+CREATE OR REPLACE TRIGGER trg_BRL
+    BEFORE INSERT ON student
+    FOR EACH ROW
+BEGIN
+    IF :NEW.id > 8005 THEN
+        :NEW.name := 'nnn';
+    END IF;
+END;
+
+
+INSERT INTO student(id) SELECT id+30 FROM student WHERE id BETWEEN 8001 AND 8005;
+
+
+//after row-level: for each row, trgger will fire after row is inserted ***
+
+
+CREATE OR REPLACE TRIGGER trg_ARL
+    AFTER INSERT or update or delete ON student
+    FOR EACH ROW
+DECLARE
+    v_action        VARCHAR2(20);
+BEGIN
+    IF INSERTING THEN
+        v_action := 'af Added student(s)';
+    ELSIF UPDATING THEN
+        v_action := 'af Updated student(s)';
+    ELSIF DELETING THEN
+        v_action := 'af Deleted student(s)';
+    END IF;
+    INSERT INTO stauditlog VALUES (SYSDATE,v_action);
+END;
+
+INSERT INTO student(id) SELECT id+40 FROM student WHERE id BETWEEN 8001 AND 8005;

@@ -1,0 +1,216 @@
+
+....................................Joining one more Table(by waliuL)...............................
+Create Table s
+(Id varchar(14),
+Name char(15),
+Dept varchar(15),
+Balance number(8,3),
+city varchar(15));
+
+
+insert into s values('CE101','Shovon','CSE',7000,'DHA');
+insert into s values('TE103','Kishore','TE',4000,'DHA');
+insert into s values('IT102','Miraz','IT',6000,'KHU');
+insert into s values('BG105','Shoag','BGE',8000,'RAJ');
+
+insert into s(id,name,dept) values('TE105','Shoag','TE');
+
+.......................w table........................................................................
+
+
+Create Table w
+(id varchar(13),
+Designation varchar(14),
+phone_no int,
+salary number(9));
+..............................................insert into w table.......................................
+insert into w values('CE101','SE',333,45000);
+insert into w values('IT103','Tex Engg.',444,50000);
+insert into w values('IT102','IT off.',555,30000);
+insert into w values('BG105','DNA expert.',555,30000);
+insert into w values('IT107','Maneger.',777,80000);
+
+......................................P table..........................................................
+Create Table p
+(ID varchar(15),
+Acc_no number(7,3),
+Sex varchar(15)
+);
+................................insert into p table...................................................
+
+insert into p values('CE101',101.34,'Male');
+
+insert into p values('IT102',101.30,'Male');
+
+insert into p values('BG105',101.40,'Male');
+
+insert into p values('TE103',101.90,'Male');
+
+insert into p values('AC101',101.54,'Male');
+
+
+
+
+...............................JOIN TWO TABE.............................................................
+
+ select s.id,s.name,s.dept,w.designation,w.phone_no from s inner join w ON s.id=w.id;
+
+ID             NAME            DEPT            DESIGNATION      PHONE_NO
+-------------- --------------- --------------- -------------- ----------
+CE101          Shovon          CSE             SE                    333
+IT102          Miraz           IT              IT off.               555
+BG105          Shoag           BGE             DNA expert.           555
+
+ ............................................INNER JOIN TREE TABLE........................................
+  
+select s.id,s.name,w.designation,w.phone_no,p.sex from s INNER JOIN w ON s.id=w.id
+    INNER JOIN p ON s.id=p.id;
+
+ID             NAME            DESIGNATION      PHONE_NO SEX
+-------------- --------------- -------------- ---------- ---------------
+CE101          Shovon          SE                    333 Male
+IT102          Miraz           IT off.               555 Male
+BG105          Shoag           DNA expert.           555 Male
+
+
+..............................................left join in two table...................................
+
+ select s.id,s.name,s.dept,w.designation,w.phone_no from s left join w ON s.id=w.id;
+
+ID             NAME            DEPT            DESIGNATION      PHONE_NO
+-------------- --------------- --------------- -------------- ----------
+CE101          Shovon          CSE             SE                    333
+IT102          Miraz           IT              IT off.               555
+BG105          Shoag           BGE             DNA expert.           555
+TE103          Kishore         TE
+
+
+..............................................left join in three table...................................
+
+select s.id,s.name,w.designation,w.phone_no,p.sex from s left join w ON s.id=w.id
+ left join p ON s.id=p.id;
+
+ID             NAME            DESIGNATION      PHONE_NO SEX
+-------------- --------------- -------------- ---------- ------------
+CE101          Shovon          SE                    333 Male
+IT102          Miraz           IT off.               555 Male
+BG105          Shoag           DNA expert.           555 Male
+TE103          Kishore                                   Male
+
+
+.............................................Right join in tree Table............................................
+
+select s.id,s.name,w.designation,w.phone_no,p.sex from s right join w ON s.id=w.id
+ left join p ON s.id=p.id;
+
+ID             NAME            DESIGNATION      PHONE_NO SEX
+-------------- --------------- -------------- ---------- ---------
+CE101          Shovon          SE                    333 Male
+IT102          Miraz           IT off.               555 Male
+BG105          Shoag           DNA expert.           555 Male
+                               Tex Engg.             444
+                               Maneger.              777
+
+...................................THough smae work right join and Right Outer join....................................
+
+ID             NAME            DESIGNATION      PHONE_NO SEX
+-------------- --------------- -------------- ---------- -----------
+CE101          Shovon          SE                    333 Male
+IT102          Miraz           IT off.               555 Male
+BG105          Shoag           DNA expert.           555 Male
+                               Tex Engg.             444
+                               Maneger.              
+...........................................Full join.................................................
+
+ select s.id,s.name,w.designation,w.phone_no,p.sex from s 
+ full join w ON s.id=w.id
+ full join p ON s.id=p.id;
+
+ID             NAME            DESIGNATION      PHONE_NO SEX
+-------------- --------------- -------------- ---------- ----
+CE101          Shovon          SE                    333 Male
+IT102          Miraz           IT off.               555 Male
+BG105          Shoag           DNA expert.           555 Male
+TE103          Kishore                                   Male
+                               Tex Engg.             444
+                               Maneger.              777
+
+
+........................................Table no four.......................................
+Create Table h
+(ID varchar(15),
+holding_no number(7,3),
+staus varchar(15)
+  );
+insert into h values('CE101',1234,'Married');
+insert into h values('TE103',3425,'Married');
+insert into h values('BG105',1110,'UnMarried');
+
+....................................INNER.join in 4 table....................................
+
+select s.id,s.name,w.phone_no,p.sex,h.staus from s inner join w ON s.id=w.id
+inner join p ON s.id=p.id
+inner join h ON s.id=h.id;
+
+ID             NAME              PHONE_NO SEX             STAUS
+-------------- --------------- ---------- --------------- ------------
+CE101          Shovon                 333 Male            Married
+BG105          Shoag                  555 Male            UnMarried
+
+....................................Left join in 4 table..........................................
+select s.id,s.name,w.phone_no,p.sex,h.staus from s left join w ON s.id=w.id
+left join p ON s.id=p.id
+left join h ON s.id=h.id;
+
+ID             NAME              PHONE_NO SEX             STAUS
+-------------- --------------- ---------- --------------- ------------
+CE101          Shovon                 333 Male            Married
+IT102          Miraz                  555 Male
+BG105          Shoag                  555 Male            UnMarried
+TE103          Kishore                    Male            Married
+TE103          Kishore                    Male            Married
+
+
+select s.id,s.name,w.phone_no,p.sex,h.staus from s right join w ON s.id=w.id
+ right join p ON s.id=p.id
+ right join h ON s.id=h.id;
+
+
+ID             NAME              PHONE_NO SEX             STAUS
+-------------- --------------- ---------- --------------- ---------------
+CE101          Shovon                 333 Male            Married
+BG105          Shoag                  555 Male            UnMarried
+                                                          Married
+                                                          Married
+
+
+
+.............................................joining one more Table...................................
+SQL> select s.id,s.name,w.phone_no,p.sex,h.staus from s inner join w ON s.id=w.id
+    inner join p ON w.id=p.id
+    inner join h ON w.id=h.id;
+
+ID             NAME              PHONE_NO SEX             STAUS
+-------------- --------------- ---------- --------------- ---------------
+CE101          Shovon                 333 Male            Married
+BG105          Shoag                  555 Male            UnMarried
+
+
+
+
+___________________________________In city wise employee___________________________________-............................
+SELECT count(*), city
+ FROM s
+ GROUP BY city;
+.............................................In what city the most employee live_______________________________--
+SELECT city,count(*)
+ FROM s
+ GROUP BY city
+ HAVING count(*) =
+ (SELECT max(count(*))
+ FROM s
+group by city);
+
+CITY            COUNT(*)
+------------- ----------
+DHA                    4

@@ -1,0 +1,2 @@
+select max(a.balance) from balance_info a
+where a.balance <(select max(a.balance) from balance_info a);

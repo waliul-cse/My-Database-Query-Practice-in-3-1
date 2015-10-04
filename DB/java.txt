@@ -1,0 +1,139 @@
+
+               ................Iner Join..........
+
+>>The INNER JOIN keyword return rows when there is at least one match in both tables.
+
+SQL INNER JOIN Syntax:
+
+SELECT column_name(s)
+FROM table_name1
+INNER JOIN table_name2
+ON table_name1.column_name=table_name2.column_name
+
+
+
+
+
+......................................Create Table............................
+
+
+
+Create Table Employee
+( e_Id    number(7),
+e_Name    char(15),   
+Salary    Number(8),
+Branch     varchar(15));
+
+
+
+.................................INSERT TABLE...............
+insert into employee values('101','JOY','12-JAN-2010',20000,'DHAKA');
+insert into employee values('102','Hasib','14-JUN-2011',30000,'Barisal');
+insert into employee values('103','Bikash','11-March-2010',20000,'Khulna');
+insert into employee values('104','asad','12-FEB-2011',10000,'Shylet');
+insert into employee values('105','Mila','20-JUN-2012',40000,'Comilla');
+insert into employee values('106','Akhi','18-JAN-2013',60000,'Rajshahi');
+
+
+
+...............Another Table Creation.............
+
+
+
+      Create Table JOB1
+      (e_Id     number(7),
+      JOB_TITLE  varchar(20),
+      SEX         char(20));
+
+
+insert into JOB1 values('101','SOFT_Engg','MALE');
+
+insert into JOB1 values('102','programmer','MALE');
+
+insert into JOB1 values('203','Tester','MALE');
+
+insert into JOB1 values('104','Accountant','Female');
+
+insert into JOB1 values('108','QA','Female');
+
+
+
+.......................INNER JOIN.................................
+
+>>Select employee.e_Name, employee.branch,employee.salary,JOB1.JOB_TITLE,JOB1.SEX from employee
+ inner join JOB1 ON employee.E_Id=JOB1.E_Id order by employee.e_Name;
+
+
+.............................SQL LEFT JOIN Keyword......................
+The LEFT JOIN keyword returns all rows from the left table (table_name1), even if there are no matches in the right table (table_name2).
+
+LEFT JOIN SYNTAX:
+
+SELECT column_name(s)
+FROM table_name1
+LEFT JOIN table_name2
+ON table_name1.column_name=table_name2.column_name
+
+
+Query:
+select employee.e_Name ,employee.branch,JOB1.Job_Title from employee LEFT JOIN JOB1 ON employee.e_Id=JOB1.e_Id order by employee.e_Name;
+
+OUTPUT:
+
+
+
+E_NAME          BRANCH          JOB_TITLE
+--------------- --------------- -----------
+Akhi            Rajshahi
+Bikash          Khulna
+Hasib           Barisal         programmer
+JOY             DHAKA           SOFT_Engg
+Mila            Comilla
+asad            Shylet          Accountant
+
+
+
+
+
+  Note:
+>>>The LEFT JOIN keyword returns all the rows from the left table (Persons), even if there are no matches in the right table (Orders).
+
+
+
+
+
+...................................SQL RIGHT JOIN Keyword...................................................................
+
+The RIGHT JOIN keyword returns all the rows from the right table (table_name2), even if there are no matches in the left table (table_name1)
+
+
+
+SQL RIGHT JOIN Syntax:
+
+SELECT column_name(s)
+FROM table_name1
+RIGHT JOIN table_name2
+ON table_name1.column_name=table_name2.column_name
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    select employee.e_Name,employee.branch,JOB1.JOB_TITLE from employee right join JOB1 ON employee.e_Id=JOB1.e_id order by employee.e_Name;
+
+OUTPUT:
+
+E_NAME          BRANCH          JOB_TITLE
+--------------- --------------- --------------------
+Hasib           Barisal         programmer
+JOY             DHAKA           SOFT_Engg
+asad            Shylet          Accountant
+                                Tester
+                                Tester
+                                QA
+                                Accountant
+                                QA
+                                programmer
+                                SOFT_Engg
+
+
+
+

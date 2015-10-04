@@ -1,0 +1,102 @@
+
+
+
+
+select year,decode(id,select year from std6 where substr(id,4,2)='10','10','3rd')result from std5;
+
+
+declare
+a varchar(20);
+
+select std5 b
+b=case when select year from std6 where substr(id,4,2)='10'
+
+
+
+
+create table std20
+(
+id varchar(20), 
+dept varchar(20)
+);
+
+insert into std20 values('ce-10002','cse');
+insert into std20 values('ce-10003','cse');
+insert into std20 values('ce-09007','cse');
+insert into std20 values('ce-09008','cse');
+insert into std20 values('it-09004','ict');
+insert into std20 values('it-09005','ict');
+
+insert into std20 values('te-11005','te');
+insert into std20 values('te-11006','te');
+insert into std20 values('te-11005','te');
+insert into std20 values('ce-08001','cse');
+insert into std20 values('ce-08002','cse');
+
+
+
+create table std21
+(
+id varchar(20), 
+name varchar(20)
+);
+
+
+insert into std21 values('ce-09007','tushar');
+insert into std21 values('ce-10202','azim');
+insert into std21 values('it-09004','abir');
+insert into std21 values('te-11006','sumon');
+insert into std21 values('ce-08001','robin');
+
+
+select distinct * from std10 left join on  std11.id=std10.id;
+
+
+create table std16
+(
+id varchar(20), 
+name varchar(20)
+);
+
+insert into std16 values('ce-10002','tanjila');
+insert into std16 values('ce-10003','symun');
+insert into std16 values('ce-09002','shihab');
+insert into std16 values('ce-11002','jobayer');
+
+
+
+select std16.id,std16.name,(case when substr(id,4,2)='10'
+then '3rd'
+when substr(id,4,2)='09' then '4th'
+else '2nd'
+end) as year from std16;
+
+
+
+create table std19
+(
+dept varchar(20), 
+balance int
+);
+
+insert into std19 values('cse','5000');
+insert into std19 values('ict','6000');
+insert into std19 values('te','8000');
+insert into std19 values('bge','10000');
+insert into std19 values('cps','2000');
+
+select max(balance) from std19 where balance<(select max(balance) from std19);
+
+select dept,avg(balance) from std19 group by dept having AVG(balance)>4000;
+
+
+create or replace procedure select_id
+(
+id in varchar;
+) as
+BEGIN
+select distinct id=std20.id , std20.dept , std21.name from std20,std21  where std20.id=std21.id AND id=std21.id;
+END select_id;
+/
+
+call select_id('ce-08001');

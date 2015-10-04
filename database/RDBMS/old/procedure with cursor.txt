@@ -1,0 +1,25 @@
+Create or replace procedure select_sp
+(
+mycur out sys_refcursor
+)
+is 
+begin
+open mycur for
+select * from student_add;
+end;
+/
+set serveroutput on format wrap
+declare 
+testcur sys_refcursor;
+row student_add%rowtype;
+
+begin
+select_sp(testcur);
+loop
+fetch testcur into row;
+exit when testcur%notfound;
+dbms_output.put_line(row.ID||':'||row.NAME);
+end loop;
+end;
+.
+run;

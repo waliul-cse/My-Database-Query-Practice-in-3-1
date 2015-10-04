@@ -1,0 +1,63 @@
+CREATE OR REPLACE TRIGGER badboy_after_delete
+ AFTER DELETE
+ ON bad_boy
+FOR EACH ROW
+ DECLARE
+ v_username varchar2(10);
+ BEGIN
+ SELECT user INTO v_username
+ FROM dual;
+ INSERT INTO badboy_audit (id, balance, delete_date, deleted_by)
+ VALUES ( :old.id, :old.balance, sysdate, v_username);
+end;
+/
+
+
+ create table badboy_audit 
+ (
+  id varchar(10),
+  balance Number(8,3),
+  delete_date Date,
+  deleted_by VARCHAR2(15));
+
+ create table badboy_audit 
+ (
+  id varchar(10),
+  balance Number(8,3),
+  delete_date Date,
+  deleted_by VARCHAR2(15));
+
+
+create table emp_info 
+ (
+  id varchar(10),
+  name varchar(10),
+  Designation varchar(10),
+  salary number(8,3));
+
+insert into emp_info values ('id-101','Abir','S/w',15000);
+insert into emp_info values ('id-102','Shohel','SSE',20000);
+insert into emp_info values ('id-103','Raasel','SA',25000);
+insert into emp_info values ('id-104','Tusahr','Manager',30000);
+insert into emp_info values ('id-105','Arif','S/w',15000);
+
+create table emp_per 
+ (
+  id varchar(10),
+  Mob_no number(8,3));
+
+insert into emp_per values ('id-102',222);
+insert into emp_per values ('id-103',333);
+insert into emp_per values ('id-104',444);
+insert into emp_per values ('id-105',555);
+
+
+
+select count(emp_info.designation),emp_info.id,emp_info.name,emp_info.designation,emp_per.Mob_no 
+from
+emp_info
+left join emp_per on emp_info.id=emp_per.id
+group by emp_info.name,emp_info.designation,emp_per.Mob_no;
+
+
+

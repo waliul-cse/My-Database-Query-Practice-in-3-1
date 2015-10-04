@@ -1,0 +1,67 @@
+You could use the decode function in an SQL statement as follows:
+
+    SELECT supplier_name,
+    decode(supplier_id, 	10000, 	'IBM',
+    	10001, 	'Microsoft',
+    	10002, 	'Hewlett Packard',
+    		'Gateway') result
+    FROM suppliers;
+
+The above decode statement is equivalent to the following IF-THEN-ELSE statement:
+
+    IF id = 'CE09002' THEN
+         result := 'IBM';
+
+    ELSIF id = 'CE09004' THEN
+        result := 'Microsoft';
+
+    ELSIF id = 'CE09006' THEN
+        result := 'Hewlett Packard';
+
+    ELSE
+        result := 'Gateway';
+
+    END IF;
+
+
+The decode function will compare each supplier_id value, one by one.
+
+
+***********Decode***************
+
+
+create table acc
+(
+	id varchar(10),
+	balance varchar(10)
+);
+
+insert into acc values('CE09002','5000');
+insert into acc values('CE09004','10000');
+insert into acc values('CE09006','20000');
+
+
+
+select balance,decode(id,'CE09002','shihab','CE09004','faisal','Rasel')result from acc;
+
+
+
+***********IF-THEN-ELSE***************
+
+
+DECLARE
+    a varchar(10);
+BEGIN
+    SELECT id INTO a FROM acc where id='CE09002';
+    IF a = 'CE09002' THEN
+         dbms_output.put_line('IBM');
+    ELSIF a = 'CE09004' THEN
+        dbms_output.put_line('Microsoft');
+    ELSIF a = 'CE09006' THEN
+        dbms_output.put_line('Hewlett Packard');
+    ELSE
+        dbms_output.put_line('Gateway');
+    END IF;
+END;
+.
+run;
